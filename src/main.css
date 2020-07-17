@@ -1,0 +1,298 @@
+<!--
+/* Font Definitions */
+
+/* @font-face {
+    font-family: "Times New Roman";
+    panose-1: 2 2 6 3 5 4 5 2 3 4;
+}
+
+@font-face {
+    font-family: Verdana;
+    panose-1: 2 11 6 4 3 5 4 4 2 4;
+} */
+
+/* Style Definitions */
+
+p.MsoNormal, li.MsoNormal, div.MsoNormal {
+    margin-right: 0pt;
+    text-indent: 0pt;
+    margin-top: 0pt;
+    margin-bottom: 0pt;
+    text-align: left;
+    font-family: "Times New Roman";
+    font-size: 10.0pt;
+    color: black;
+}
+
+p.MsoTagline, li.MsoTagline, div.MsoTagline {
+    margin-right: 0pt;
+    text-indent: 0pt;
+    margin-top: 0pt;
+    margin-bottom: 0pt;
+    text-align: right;
+    font-family: Verdana;
+    font-size: 8.0pt;
+    color: black;
+    font-weight: bold;
+}
+
+p.MsoBodyText, li.MsoBodyText, div.MsoBodyText {
+    margin-right: 0pt;
+    text-indent: 0pt;
+    margin-top: 0pt;
+    margin-bottom: 8.0pt;
+    text-align: left;
+    font-family: "Times New Roman";
+    font-size: 11.0pt;
+    color: black;
+}
+
+ol {
+    margin-top: 0in;
+    margin-bottom: 0in;
+    margin-left: -2197in;
+}
+
+ul {
+    margin-top: 0in;
+    margin-bottom: 0in;
+    margin-left: -2197in;
+}
+
+@page {
+    size: 8.0302in 11.0in;
+}
+
+-->
+/* Style the form with a coloured background (and a gradient for Gecko/WebKit browsers), along with curved corners and a drop shadow */
+
+.x form {
+    width: 95%;
+    margin: 0 auto;
+    padding: 10px 20px;
+    overflow: auto;
+    /* color: #3e4a49; */
+    /* background-color: #E0E0E0; */
+    background: -webkit-gradient( linear, left bottom, left top, color-stop(0, #E0E0E0), color-stop(1, #F0F0F0));
+    background: -moz-linear-gradient( center bottom, #E0E0E0 0%, #F0F0F0 100%);
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
+    -moz-box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
+    -webkit-box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
+}
+
+/* Give form elements consistent margin, padding and line height */
+
+.x form ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.x form ul li {
+    margin: .9em 0 0 0;
+    padding: 0;
+}
+
+/* Form heading */
+
+.x form h1 {
+    margin: 0 0 1.5em 0;
+    padding: 0;
+    text-align: center;
+}
+
+/* Give each fieldset a darker background, dark curved border and plenty of space */
+
+.x fieldset {
+    padding: 0 20px 20px;
+    margin: 0 0 30px;
+    border: 1px solid #000080;
+    /*background: #FFFFCC;*/
+    background-color: rgba(255, 255, 204, 0.7);
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+}
+
+/* Give each fieldset legend a nice curvy green box with white text */
+
+.x legend {
+    color: #fff;
+    background: #79971d;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.9em;
+    font-weight: bold;
+    text-align: center;
+    padding: 5px;
+    margin: 0;
+    width: 9em;
+    border: 1px solid #000080;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+/* The field labels */
+
+.x label {
+    display: block;
+    float: left;
+    clear: left;
+    text-align: right;
+    width: 80%;
+    padding: .2em 0 0 0;
+    margin: .10em .5em 0 0;
+}
+
+/* Style the fields */
+
+.x input, textarea {
+    display: block;
+    margin: 0;
+    padding: .4em;
+    width: 90%;
+}
+
+.x select {
+    display: block;
+    margin: 0;
+    padding: .4em;
+    width: 70%;
+}
+
+.x input, textarea, .date {
+    border: 1px solid #eae1c0;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, .5) 1px 1px 1px 1px inset;
+    -moz-box-shadow: rgba(0, 0, 0, .5) 1px 1px 1px 1px inset;
+    -webkit-box-shadow: rgba(0, 0, 0, .5) 1px 1px 1px 1px inset;
+    background: #fff;
+}
+
+.x input {
+    font-size: .9em;
+}
+
+.x select {
+    padding: 0;
+    margin-bottom: 2.5em;
+    position: relative;
+    top: .7em;
+}
+
+#dd {
+    padding: 0;
+    margin-bottom: .5em;
+    width: 5em;
+    top: .4em;
+}
+
+#mm {
+    padding: 0;
+    margin-bottom: .5em;
+    width: 5em;
+    top: .4em;
+}
+
+#yyyy {
+    padding: 0;
+    margin-bottom: .5em;
+    width: 5em;
+    top: .4em;
+}
+
+.x textarea {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size: .9em;
+    height: 5em;
+}
+
+/* Place a border around focused fields, and hide the inner shadow */
+
+.x form *:focus {
+    border: 1px solid #593131;
+    outline: none;
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+/* Display correctly filled-in fields with a green background */
+
+.x input:valid, textarea:valid {
+    /* background: #fee1ce; */
+}
+
+/* Submit button */
+
+.x input[type="submit"] {
+    margin: 30px auto 0 auto;
+    width: 5em;
+    padding: 5px;
+    border: 1px solid #000080;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
+    -moz-box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
+    -webkit-box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
+    color: #fff;
+    background: #4169E1;
+    font-size: .9em;
+    font-weight: bold;
+    -webkit-appearance: none;
+}
+
+.x input[type="submit"]:hover, input[type="submit"]:active {
+    cursor: pointer;
+    background: #fff;
+    color: #4169E1;
+}
+
+.x input[type="submit"]:active {
+    background: #79971d;
+    box-shadow: 0 0 .5em rgba(0, 0, 0, .8) inset;
+    -moz-box-shadow: 0 0 .5em rgba(0, 0, 0, .8) inset;
+    -webkit-box-shadow: 0 0 .5em rgba(0, 0, 0, .8) inset;
+}
+
+/* Header/footer boxes */
+
+.wideBox {
+    clear: both;
+    text-align: center;
+    margin: 70px;
+    padding: 10px;
+    background: #f4c7a9;
+    border: 1px solid #333;
+    line-height: 80%;
+}
+
+.wideBox h1 {
+    font-weight: bold;
+    margin: 20px;
+    color: #666;
+    font-size: 1.5em;
+}
+
+/* Validator error boxes */
+
+.error {
+    background-color: #fffe36;
+    border: 1px solid #e1e16d;
+    font-size: .8em;
+    color: #000;
+    padding: .3em;
+    margin-left: 5px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
+    -moz-box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
+    -webkit-box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
+}

@@ -1,25 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {BrowserRouter as Router , Route, Switch, } from 'react-router-dom'
+import Form from './Form'
+import Form2 from './Form4'
+import Agreement from './agrement'
+import Menu from './complete'
+import AppBar from './app bar/AppBar'
+import DD from './upload'
+import Pay from './pay'
+
+// import Test from './main'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <AppBar/>
+    <Router>
+      <Switch>
+      {/* <Route exact path='/' component={Form2}/> */}
+      <Route exact path='/' component={Agreement}/>
+      <Route exact path='/form' component={Form}/>
+      <Route exact path='/upload' component={DD}/>
+      <Route exact path='/pay' component={Pay}/>
+
+      <Route exact path='/dashboard' component={Menu}/>
+      </Switch>
+    </Router>
+</>
+    
   );
 }
 
