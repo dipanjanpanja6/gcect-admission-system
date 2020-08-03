@@ -29,7 +29,7 @@ const history=useHistory()
         <Grid style={{ backgroundColor: '#eee' }} container>
             <Paper className={sty.paper} style={{ textAlign: "justify" }}>
                 <Typography  align='center' gutterBottom variant='h4'>ADMISSION NOTICE {new Date().getFullYear()}</Typography>
-                <Typography  variant='subtitle2'>Online application for admission to B. Tech /M. Tech program for the academic session 2019-20 will commence from 04th July 2019 at 10 AM only through web portal of the college website <Link target='_blank' href='www.gcect.ac.in'>www.gcect.ac.in</Link>.</Typography>
+                <Typography  variant='subtitle2'>Online application for admission to B. Tech /M. Tech program for the academic session 2019-20 will commence from 04th July 2019 at 10 AM only through web portal of the college website <Link target='_blank'rel="noopener noreferrer" to ='www.gcect.ac.in'>www.gcect.ac.in</Link>.</Typography>
                 <p><strong>For any online application related issue and queries, please write us to:</strong><a href="mailto:gcectwb@gmail.com?subject=Enquiry">gcectwb@gmail.com</a></p>
                 <p><strong>ONLINE ADMISSION PROCEDURE</strong></p>
                 <p>1. Visit College website and click&nbsp;Apply Online tab.</p>
@@ -49,7 +49,7 @@ const history=useHistory()
                 <p>14. Pay Admission and other fees as appeared in the challan in State Bank of India, Beliaghata Branch.</p>
                 <p>After remitting the fees, wait for 2 working days and then check by logging in whether your payment status shows successful.</p>
                 <p>N.B. Payment can also be made through NEFT in the specified Bank Account and the NEFT transaction slip is to be submitted in original at the time of document verification.</p>
-                <p>15. As per the norms of UGC,an affidavit on anti-ragging is to be submitted online (<a target='_blank' href="http://www.antiragging.in/Site/Affidavits_Registration.aspx">here</a>) and hard copy of the anti-ragging affidavit is to be submitted at the time of document verification by the student and his/her guardian.</p>
+                <p>15. As per the norms of UGC,an affidavit on anti-ragging is to be submitted online (<a target='_blank' rel="noopener noreferrer" href="http://www.antiragging.in/Site/Affidavits_Registration.aspx">here</a>) and hard copy of the anti-ragging affidavit is to be submitted at the time of document verification by the student and his/her guardian.</p>
                 <p><strong><em>LAST DATE OF ONLINE APPLICATION AND SUBMISSION OF APPLICATION FEES IS 20th&nbsp;&nbsp;JULY, 2019 UP TO 4.00 P.M.</em></strong></p>
                 <p><strong>THE FOLLOWING DOCUMENTS TO BE PRODUCED FOR PHYSICALVERIFICATION</strong></p>
                 <p><strong>a. Signed downloaded application form. </strong></p>
@@ -73,7 +73,7 @@ const history=useHistory()
             </Paper>
             <Paper className={sty.paper} style={{ textAlign: "justify" }}>
                 <Typography align="center" variant="h4" gutterBottom>Terms & Conditions</Typography>
-                <p>
+                {/* <p> */}
                     <p>I have very carefully read the regulation of the institute and have understood that if my class attendance in an academic semester falls&nbsp;<strong><em>below 75%</em></strong> of the total number of classes held in the semester would render me <strong>DIS-QUALIFIED&nbsp;</strong>&nbsp;to seat for the end semester examination of that academic session as per the existing ACADEMIC REGULATION of the institute.</p>
 
                     <p>I further declare that I shall&nbsp;<strong>NOT</strong> request the college authorities for any relaxation/exemption on attendance percentage on any ground whatsoever.</p>
@@ -89,13 +89,13 @@ const history=useHistory()
                     <p>&nbsp;</p>
 
                     <p>In addition to the above-mentioned pledges made by me, I further commit that I will regularly follow the Notices stuck on the college notice board and/or uploaded on the college website.</p>
-                </p>
+                {/* </p> */}
             </Paper>
 
             <Paper className={sty.paper} style={{ textAlign: "justify" }}>
                 <Typography align='center'  variant="h4" gutterBottom>Important Documents</Typography>
                 <div align="left">
-                    <h3><a href="admin/pages/pic/download/College Brochure.pdf" target="_blank">College Brochure</a></h3>
+                    <h3><a href="admin/pages/pic/download/College Brochure.pdf" target="_blank" rel="noopener noreferrer">College Brochure</a></h3>
                     {/* <!--<h3><a href="docs/College Brochure.pdf" target="_blank">College Brochure</a></h3>--> */}
                 </div>
             </Paper>
@@ -104,9 +104,9 @@ const history=useHistory()
                 <center>
                     <Typography variant="h4" gutterBottom>!!! Notice !!!</Typography>
                     <br />
-                    <p class="style10">Please Go to Student Login and Update Payment and Upload Photo &amp; Signature to complete the Application Process</p>
-                    <p class="style10">You will get SMS alert with your Application Id, Username &amp; Password only after completion of the 3rd part of the application form which includes your address, family details and other details.</p>
-                    <p class="style10">If in case SMS with login details will not reach yor mobile use your registered <strong>mobile number</strong> &amp; <strong>Date of Birth</strong> <br />
+                    <p >Please Go to Student Login and Update Payment and Upload Photo &amp; Signature to complete the Application Process</p>
+                    <p >You will get SMS alert with your Application Id, Username &amp; Password only after completion of the 3rd part of the application form which includes your address, family details and other details.</p>
+                    <p >If in case SMS with login details will not reach yor mobile use your registered <strong>mobile number</strong> &amp; <strong>Date of Birth</strong> <br />
                           as the <strong>User Id &amp; Password</strong></p>
                 </center>
             </Paper>

@@ -183,8 +183,8 @@ function FormMain3(props) {
                     permanentAddress
                 }
                 console.log(data);
-                // props.id?setD
-                Axios.post(`${url}/api/student/`,
+                
+                Axios.post(`${url}/api/student/${props.id}`,
                     data,
                     {
                         headers: {
@@ -196,6 +196,7 @@ function FormMain3(props) {
                     console.log(resp);
                     if (resp.data.success === true) {
                         setSubmitting(false);
+                        localStorage.setItem('step',3)
                         props.success(3);
 
                     }
@@ -275,7 +276,7 @@ function FormMain3(props) {
                                 label="Select Blood Group"
                             >
                                 {blood.map(p => {
-                                    return (<MenuItem value={p}>
+                                    return (<MenuItem key={p} value={p}>
                                         {p}
                                     </MenuItem>)
                                 })}
@@ -290,7 +291,7 @@ function FormMain3(props) {
                                 label="Select Religion"
                             >
                                 {Religion.map(p => {
-                                    return (<MenuItem value={p}>
+                                    return (<MenuItem key={p} value={p}>
                                         {p}
                                     </MenuItem>)
                                 })}
@@ -529,6 +530,8 @@ function FormMain3(props) {
     )
 }
 FormMain3.propType = {
-    success: PropType.func.isRequired
+    success: PropType.array.isRequired,
+    id:PropType.string.isRequired,
+
 }
 export default FormMain3

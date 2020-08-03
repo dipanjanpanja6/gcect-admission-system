@@ -65,7 +65,7 @@ function FormMain() {
     const history = useHistory()
     const sty = useStyles();
     const [next, setNext] = React.useState(2)
-    const [id, setId] = useState(null)
+    const [id, setId] = useState()
     const formS = (p) => { setNext(p) }
     useEffect(()=>{
         if(localStorage.getItem('id')){
@@ -343,9 +343,9 @@ function FormMain() {
                                     >
                                         {values.courseType ? values.courseType === 'B.Tech' ?
                                             b_tech.map(p => {
-                                                return (<MenuItem value={p}>{p}</MenuItem>)
+                                                return (<MenuItem key={p} value={p}>{p}</MenuItem>)
                                             }) : m_tech.map(p => {
-                                                return (<MenuItem value={p}>{p}</MenuItem>)
+                                                return (<MenuItem key={p} value={p}>{p}</MenuItem>)
 
                                             }) : ""
                                         }
@@ -791,4 +791,5 @@ function FormMain() {
         </Grid >
     );
 }
+
 export default FormMain

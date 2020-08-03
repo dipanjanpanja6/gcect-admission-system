@@ -45,7 +45,7 @@ function Form4() {
     const upload = () => {
         console.log(state);
         if (state.sigData !== '' && state.picData !== '') {
-            history.push('/dashboard')
+            // history.push('/dashboard')
         } else {
             alert('please select both image first !!!')
         }
@@ -84,14 +84,14 @@ function Form4() {
         <>
             <Typography variant='h5'>Upload Photo & Signature</Typography><br />
             <div style={{ display: 'flex', flexDirection: 'column', paddingLeft: 16 }}>
-                <img src={state.pic} style={{
+                <img src={state.pic} alt=" " style={{
                     width: '99px',
                     height: '105px',
-                    border: 'solid 1px',
+                    border: 'solid 1px', 
                 }} />
                 <Typography variant='subtitle1'>Upload Photo</Typography>
                 <TextField name='picture' inputProps={{ accept: "image/*" }} onChange={handleChange} className={sty.textField} helperText='size must not exceed 100kb' type='file' />
-                <img src={state.sig} style={{
+                <img src={state.sig} alt="signature" style={{
                     width: '150px',
                     height: '67px',
                     border: 'solid 1px',
