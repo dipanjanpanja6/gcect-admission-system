@@ -1,18 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom'
-import { TextField, Paper, Grid, MenuItem, Typography, Divider, Fab, InputAdornment, InputBase } from '@material-ui/core';
+import { TextField, Paper, Grid, MenuItem, Typography, Divider, Fab, InputAdornment, Checkbox, } from '@material-ui/core';
 import { Form, Field, Formik } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios'
 
-import './aplicant details/botstrap.css'
-import './aplicant details//hs_mp.css'
 import Form1 from './Form2'
 import Form2 from './Form3'
 import Form3 from './Form4'
+import { url } from '../config/config';
+import { useEffect } from 'react';
 
 const useStyles = makeStyles((theme) => ({
+    id: {
+        height: 12
+    },
     root: {
         [theme.breakpoints.down('sm')]: {
             paddingLeft: 3,
@@ -26,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     },
     paper: {
         // margin: 30,
-        width:'100%',
+        width: '100%',
         padding: 15,
         [theme.breakpoints.down('sm')]: {
             width: 'inherit'
@@ -62,9 +65,20 @@ function FormMain() {
     const history = useHistory()
     const sty = useStyles();
     const [next, setNext] = React.useState(2)
-    // console.log(new Date().getFullYear() - 2);
+    const [id, setId] = useState(null)
     const formS = (p) => { setNext(p) }
-  
+    useEffect(()=>{
+        if(localStorage.getItem('id')){
+            setId(localStorage.getItem('id'))
+        if(localStorage.getItem('step')){
+            setNext(localStorage.getItem('step'))}}
+    },[])
+    const b_tech = [
+        "CSE", 'IT', 'CT'
+    ]
+    const m_tech = [
+        'IT', 'CT'
+    ]
 
     function gaterThan(ref, msg) {
         return Yup.mixed().test({
@@ -102,8 +116,9 @@ function FormMain() {
         studentMobileNo: Yup.string().matches(`^[0-9]{10}$`, "Incorrect Mobile no.").required('Required'),
         dob: Yup.date().required('Required'),
         medium: Yup.string().required('Required'),
-        // castes: Yup.string().required('Required'),
         caste: Yup.string().required('Required'),
+        email: Yup.string().email().required('Required'),
+
 
         rollNo12th: Yup.string().max(10, "must be at most 10 digit").required('Required'),
         registrationNo12th: Yup.string().max(10, "must be at most 10 digit").required('Required'),
@@ -170,19 +185,24 @@ function FormMain() {
                         board10th: "WEST BENGAL BOARD OF SECONDARY EDUCATION",
                         passYear10th: "",
                         schName10th: "",
-                        percent10th:'',
+                        percent10th: '',
 
-                        idType: "AADHAR",
+                        idType: "AADHAAR",
                         IdNo: "",
                         medium: "Bengali",
                         dob: "",
                         studentMobileNo: "",
+                        email: "",
+
                         castes: "",
                         caste: "",
                         applicantName: "",
                         applicantName2: "",
                         applicantName3: "",
                         applicantType: 'General',
+                        courseType: 'B.Tech',
+                        stream: '',
+                        lateral: false
 
 
 
@@ -195,13 +215,17 @@ function FormMain() {
                             firstName: values.applicantName,
                             middleName: values.applicantName2,
                             lastName: values.applicantName3,
-                            subCaste: values.castes,
-                            categories: values.caste,
-                            studentMobileNo: values.studentMobileNo,
+                            caste: values.castes,//
+                            category: values.caste,
+                            mobile: values.studentMobileNo,
+                            email: values.email,
                             idType: values.idType,
-                            IdNo: values.IdNo,
+                            idNo: values.IdNo,
                             medium: values.medium,
                             dob: values.dob,
+                            course: values.courseType,
+                            stream: values.stream,
+                            lateral: values.lateral,
                             XII: {
                                 roll: values.rollNo12th,
                                 registration: values.registrationNo12th,
@@ -234,28 +258,32 @@ function FormMain() {
                         console.log(data);
                         // console.log(values);
 
-                        // axios.post(window.location.href,
-                        //     data,
-                        //     {
-                        //         headers: {
-                        //             // 'Access-Control-Allow-Origin': '*',
-                        //             'Content-Type': 'application/json',
-                        //         }
-                        //     },
-                        //     ).then((resp) => {
-                        //         console.log(resp);
-                        //         if(resp.success==true){
-                        //             setSubmitting(false);
-                        setNext(1);
-                        //         }
-                        //         if(resp.error==true){
-                        //             setSubmitting(false);
-                        //             alert(resp.message)
-                        //         }
-                        //     }
-                        //     ).catch(r=>console.log(r))
-                        // alert(JSON.stringify(data, null, 2));
-                    }}
+                        axios.post(`${url}/api/student`,
+                            data,
+                            {
+                                headers: {
+                                    // 'Access-Control-Allow-Origin': '*',
+                                    'Content-Type': 'application/json',
+                                }
+                            }
+                        ).then((resp) => {
+                            console.log(resp);
+                            if (resp.data.success === true) {
+                                setSubmitting(false);
+                                localStorage.setItem('step',2)
+                                localStorage.setItem('id',resp.data.id)
+                                setId(resp.data.id)
+                                setNext(2);
+                            }
+                            if (resp.data.error === true) {
+                                setSubmitting(false);
+                                alert(resp.data.message)
+                            }
+                        }
+                        ).catch(r => console.log(r))
+                        alert(JSON.stringify(data, null, 2));
+                    }
+                    }
 
                     validationSchema={schema}
                 >
@@ -264,12 +292,7 @@ function FormMain() {
                             values,
                             touched,
                             errors,
-                            dirty,
-                            isSubmitting,
-                            handleChange,
                             handleBlur,
-                            handleSubmit,
-                            handleReset,
                         } = props;
                         return (
                             <Form>
@@ -277,20 +300,65 @@ function FormMain() {
                                     <Field
                                         name="applicantType"
                                         select
-                                        // label="Please select your applicantType"
+                                        label="Select your applicantType"
                                         style={{ margin: 8 }}
                                         required
+                                        className={sty.textField}
                                         as={TextField}
-                                        helperText="Please select your applicant Type"
-                                        onBlur={handleBlur} 
+                                        // helperText="Select your applicant Type"
+                                        onBlur={handleBlur}
                                     >
                                         <MenuItem value='General'>
                                             General
                             </MenuItem>
                                         <MenuItem value='TFW'>
                                             TFW
-                            </MenuItem> 
+                            </MenuItem>
                                     </Field>
+                                    <Field
+                                        name="courseType"
+                                        select
+                                        className={sty.textField}
+                                        style={{ margin: 8 }}
+                                        required
+                                        as={TextField}
+                                        label="Select Course Type"
+                                        onBlur={handleBlur}
+                                    >
+                                        <MenuItem value='B.Tech'>
+                                            B.Tech                            </MenuItem>
+                                        <MenuItem value='M.Tech'>
+                                            M.Tech                            </MenuItem>
+                                    </Field>
+                                    <Field
+                                        name="stream"
+                                        select
+                                        // label="Please select your applicantType"
+                                        style={{ margin: 8 }}
+                                        className={sty.textField}
+                                        required
+                                        as={TextField}
+                                        label="Select Stream"
+                                        onBlur={handleBlur}
+                                    >
+                                        {values.courseType ? values.courseType === 'B.Tech' ?
+                                            b_tech.map(p => {
+                                                return (<MenuItem value={p}>{p}</MenuItem>)
+                                            }) : m_tech.map(p => {
+                                                return (<MenuItem value={p}>{p}</MenuItem>)
+
+                                            }) : ""
+                                        }
+
+                                    </Field>
+                                    <Grid style={{ display: 'inline-flex' }}>
+
+                                        <Field
+                                            onBlur={handleBlur}
+                                            name='lateral'
+                                            as={Checkbox}
+                                        /><p>Lateral Entry</p>
+                                    </Grid>
                                 </div>
                                 <Divider className={sty.divider} />
                                 <div>
@@ -298,31 +366,31 @@ function FormMain() {
                                         name="applicantName"
                                         label="Applicant First Name"
                                         style={{ margin: 8 }}
-                                        placeholder="First Name" 
+                                        placeholder="First Name"
                                         margin="normal"
                                         error={errors.applicantName && touched.applicantName}
                                         helperText={(errors.applicantName && touched.applicantName) && errors.applicantName}
-                                        as={TextField} 
+                                        as={TextField}
                                     />
                                     <Field
                                         name="applicantName2"
                                         label="Middle Name(if any)"
                                         style={{ margin: 8 }}
-                                        placeholder="Middle Name" 
+                                        placeholder="Middle Name"
                                         margin="normal"
                                         error={errors.applicantName2 && touched.applicantName2}
                                         helperText={(errors.applicantName2 && touched.applicantName2) && errors.applicantName2}
-                                        as={TextField} 
+                                        as={TextField}
                                     />
                                     <Field
                                         name="applicantName3"
                                         label="Applicant Last Name"
                                         style={{ margin: 8 }}
-                                        placeholder="Last Name" 
+                                        placeholder="Last Name"
                                         margin="normal"
                                         error={errors.applicantName3 && touched.applicantName3}
                                         helperText={(errors.applicantName3 && touched.applicantName3) && errors.applicantName3}
-                                        as={TextField} 
+                                        as={TextField}
                                     />
 
                                     <Field
@@ -352,18 +420,18 @@ function FormMain() {
                                             OBC-B
                             </MenuItem>
                                     </Field>
-                                    {values.caste? values.caste!=="General"  &&
-                                    <Field
-                                        name="castes"
-                                        label="Select Sub caste"
-                                        style={{ margin: 8 }} 
-                                        margin="normal"
-                                        required
-                                        error={errors.castes && touched.castes}
-                                        helperText={(errors.castes && touched.castes) && errors.castes}
-                                        as={TextField} 
-                                    />:null
-                        }
+                                    {values.caste ? values.caste !== "General" &&
+                                        <Field
+                                            name="castes"
+                                            label="Select Sub caste"
+                                            style={{ margin: 8 }}
+                                            margin="normal"
+                                            required
+                                            error={errors.castes && touched.castes}
+                                            helperText={(errors.castes && touched.castes) && errors.castes}
+                                            as={TextField}
+                                        /> : null
+                                    }
                                     <Field
                                         label="Student Mobile No"
                                         name="studentMobileNo"
@@ -419,26 +487,28 @@ function FormMain() {
                                     <Field
                                         placeholder="Enter ID No"
                                         name="IdNo"
+                                        margin='dense'
                                         className={sty.textField}
-                                        style={{ width: '45ch' }} 
+                                        style={{ width: 'auto' }}
                                         error={errors.IdNo && touched.IdNo}
                                         helperText={(errors.IdNo && touched.IdNo) && errors.IdNo}
-                                        as={TextField} 
+                                        as={TextField}
                                         InputProps={{
                                             startAdornment: (
                                                 <Field
-                                                    variant='filled'
                                                     label="Select ID"
+                                                    variant='filled'
+                                                    size="small"
                                                     name="idType"
-                                                    style={{ width: '20ch',marginRight:12}}
-                                                    margin='dense' 
+                                                    style={{ width: '20ch', marginRight: 12 }}
+                                                    classes={{ inputBase: sty.id }}
                                                     select
                                                     required
                                                     error={errors.idType && touched.idType}
                                                     helperText={(errors.idType && touched.idType) && errors.idType}
                                                     as={TextField}>
-                                                    <MenuItem value='AADHAR'>
-                                                        AADHAR
+                                                    <MenuItem value='AADHAAR'>
+                                                        AADHAAR
                                 </MenuItem>
                                                     <MenuItem value='PAN'>
                                                         PAN
@@ -451,6 +521,15 @@ function FormMain() {
                                         }}
                                     >
                                     </Field>
+                                    <Field
+                                        name="email"
+                                        className={sty.textField}
+                                        error={errors.email && touched.email}
+                                        helperText={(errors.email && touched.email) && errors.email}
+
+                                        as={TextField}
+                                        label="E-mail"
+                                    />
                                 </div>
                                 <Divider className={sty.divider} />
                                 <div>
@@ -507,7 +586,7 @@ function FormMain() {
                                         name="registrationNo10th"
                                         label="10th Registration No."
                                         style={{ margin: 8 }}
-                                        margin='dense' 
+                                        margin='dense'
                                     />
                                     <Field
                                         error={errors.rollNo10th && touched.rollNo10th}
@@ -516,7 +595,7 @@ function FormMain() {
 
                                         name="rollNo10th"
                                         label="10th Roll No"
-                                        style={{ margin: 8 }} 
+                                        style={{ margin: 8 }}
                                         margin='dense'
                                     />
                                     <Field
@@ -534,7 +613,7 @@ function FormMain() {
                                 <Divider className={sty.divider} />
                                 <div>
                                     <Typography variant='subtitle1'>Higher Secondary (12th Level) details</Typography>
-                                    <Field 
+                                    <Field
                                         label="Name of School"
                                         name="schName12th"
                                         error={errors.schName12th && touched.schName12th}
@@ -566,7 +645,7 @@ function FormMain() {
                                         className={sty.textField}
                                     >
                                         <MenuItem value='WEST BENGAL COUNCIL OF HIGHER SECONDARY EDUCATION'>
-                                        WEST BENGAL COUNCIL OF HIGHER SECONDARY EDUCATION
+                                            WEST BENGAL COUNCIL OF HIGHER SECONDARY EDUCATION
                             </MenuItem>
                                         <MenuItem value='CENTRAL BOARD OF SECONDARY EDUCATION'>
                                             CENTRAL BOARD OF SECONDARY EDUCATION
@@ -588,7 +667,7 @@ function FormMain() {
                                         name="registrationNo12th"
                                         label="HS Registration No."
                                         style={{ margin: 8 }}
-                                        margin='dense' 
+                                        margin='dense'
                                     />
                                     <Field
                                         error={errors.rollNo12th && touched.rollNo12th}
@@ -705,8 +784,8 @@ function FormMain() {
                     }}
                 </Formik>
                 }
-                {next === 1 && <Form1 success={formS} />}
-                {next === 2 && <Form2 success={formS} />}
+                {/* {next === 1 && <Form1 success={formS} />} */}
+                {next === 2 && <Form2 success={formS} id={id} />}
                 {next === 3 && <Form3 />}
             </Paper>
         </Grid >

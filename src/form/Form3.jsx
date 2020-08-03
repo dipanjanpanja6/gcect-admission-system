@@ -4,8 +4,9 @@ import { TextField, Paper, Grid, MenuItem, Typography, Divider, Fab, InputAdornm
 import { Form, Field, useFormikContext, Formik } from 'formik';
 import * as Yup from 'yup';
 import { useHistory } from 'react-router-dom';
-import Form4 from './Form4'
 import PropType from 'prop-types'
+import Axios from 'axios';
+import { url } from '../config/config';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -60,7 +61,14 @@ function FormMain3(props) {
         'A-', 'A+', 'B-', 'B+', 'AB-', 'AB+', 'O-', 'O+', 'Unknown'
     ]
     const Religion = [
-        'A-', 'A+', 'B-', 'B+', 'AB-', 'AB+', 'O-', 'O+', 'Unknown'
+        'Hinduism',
+        'Islam',
+        'Christianity',
+        'Sikhism',
+        'Buddhism',
+        'Jainism',
+        'Unaffiliated',
+        'Others',
     ]
     function isSubject(ref, msg) {
         return Yup.mixed().test({
@@ -86,7 +94,6 @@ function FormMain3(props) {
         guardianNo: Yup.string().length(10, 'Invalid').required('Required'),
         x: Yup.boolean(),
         MIncome: Yup.number().required('Required'),
-        email: Yup.string().email().required('Required'),
         gender: Yup.string().required('Required'),
         maritalStatus: Yup.string().required('Required'),
         blood: Yup.string().required('Required'),
@@ -139,7 +146,7 @@ function FormMain3(props) {
                     state: values.statePX,
                     country: values.countryPX,
                 }
-               const presentAddress= {
+                const presentAddress = {
                     address: values.AddressP,
                     policeStation: values.PSP,
                     pin: values.pinP,
@@ -147,8 +154,8 @@ function FormMain3(props) {
                     state: values.stateP,
                     country: values.countryP,
                 }
-                const permanentAddress = values.x? presentAddress: PA 
-                
+                const permanentAddress = values.x ? presentAddress : PA
+
                 const data = {
                     gender: values.gender,
                     maritalStatus: values.maritalStatus,
@@ -176,30 +183,29 @@ function FormMain3(props) {
                     permanentAddress
                 }
                 console.log(data);
-                
-                // console.log(values);
+                // props.id?setD
+                Axios.post(`${url}/api/student/`,
+                    data,
+                    {
+                        headers: {
+                            // 'Access-Control-Allow-Origin': '*',
+                            'Content-Type': 'application/json',
+                        }
+                    }
+                ).then((resp) => {
+                    console.log(resp);
+                    if (resp.data.success === true) {
+                        setSubmitting(false);
+                        props.success(3);
 
-                // axios.post(window.location.href,
-                //     data,
-                //     {
-                //         headers: {
-                //             // 'Access-Control-Allow-Origin': '*',
-                //             'Content-Type': 'application/json',
-                //         }
-                //     },
-                //     ).then((resp) => {
-                //         console.log(resp);
-                //         if(resp.success==true){
-                //             setSubmitting(false);
-                props.success(3);
-                //         }
-                //         if(resp.error==true){
-                //             setSubmitting(false);
-                //             alert(resp.message)
-                //         }
-                //     }
-                //     ).catch(r=>console.log(r))
-                // alert(JSON.stringify(data, null, 2));
+                    }
+                    if (resp.data.error === true) {
+                        setSubmitting(false);
+                        alert(resp.data.message)
+                    }
+                }
+                ).catch(r => console.log(r))
+
             }}
 
             validationSchema={schema}
@@ -309,15 +315,7 @@ function FormMain3(props) {
                                 <MenuItem value='No'>No</MenuItem>
                                 <MenuItem value='Yes'>Yes</MenuItem>
                             </Field>
-                            <Field
-                                name="email"
-                                className={sty.textField}
-                                error={errors.email && touched.email}
-                                helperText={(errors.email && touched.email) && errors.email}
 
-                                as={TextField}
-                                label="E-mail"
-                            />
                         </div>
                         <Divider className={sty.divider} />
                         <Typography variant='subtitle1'>Guardian Details</Typography>

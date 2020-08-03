@@ -1,11 +1,11 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
+import {Toolbar,Link} from '@material-ui/core'; 
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+import MenuIcon from '@material-ui/icons/Menu'; 
+import { Link as RouterLink, useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,25 +14,42 @@ const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
   },
-  title: {
-    flexGrow: 1,
+  grow:{
+    flexGrow:1
   },
+  title: { 
+    color: '#fff',
+    fontSize: 'x-large', 
+
+},
 }));
 
-export default function ButtonAppBar() {
+function Appbar(props) {
   const classes = useStyles();
+  const history=useHistory()
 
+const login=()=>{
+  history.push('/login')
+}
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
          
-          <Typography variant="h6" className={classes.title}>
+          {/* <Typography variant="h6" className={classes.title}>
             GCECT Admission Portal
-          </Typography>
-          <Button color="inherit">Login</Button>
+          </Typography> */}
+          <Link to='/' underline='none' component={RouterLink} className={classes.title} variant="h6" noWrap>
+          GCECT Admission Portal
+          </Link>
+          <div className={classes.grow} />
+        {/* {window.location.pathname!=='/login' &&  <Button onClick={login} color="inherit">Login</Button>} */}
+        {props.auth===true && <Button onClick={props.out} color="inherit">Logout</Button>}
+        {props.auth===false ?<Button onClick={login} color="inherit">Login</Button>:""}
+        {/* {&& <Button onClick={login} color="inherit">Login</Button>} */}
         </Toolbar>
       </AppBar>
     </div>
   );
 }
+export default Appbar;

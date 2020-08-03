@@ -41,64 +41,66 @@ const useStyles = makeStyles((theme) => ({
 function Form4() {
     const sty = useStyles();
     const history = useHistory()
-    const [state, setState] = React.useState({sigData:'',picData:''})
-    const upload=()=>{
+    const [state, setState] = React.useState({ sigData: '', picData: '' })
+    const upload = () => {
         console.log(state);
-        if(state.sigData!=='' && state.picData!==''){
+        if (state.sigData !== '' && state.picData !== '') {
             history.push('/dashboard')
-        }else{
+        } else {
             alert('please select both image first !!!')
         }
-        
+
     }
-    const handleChange=(e)=>{
+    const handleChange = (e) => {
         if (e.target.files && e.target.files[0]) {
             let file = e.target.files[0];
-if(file.size/1000>500) { return alert('size must not exceed 500kb')}else{
-        let reader = new FileReader();
-        if(e.target.name=='picture') {
-        reader.onloadend = () => {
-            setState({
-                ...state,
-                picData:file,
-                pic: reader.result,
-            })
+            if (file.size / 1000 > 100) { return alert('size must not exceed 100kb') } else {
+                let reader = new FileReader();
+                if (e.target.name === 'picture') {
+                    reader.onloadend = () => {
+                        setState({
+                            ...state,
+                            picData: file,
+                            pic: reader.result,
+                        })
+                    }
+                }
+                if (e.target.name === 'signature') {
+                    reader.onloadend = () => {
+                        setState({
+                            ...state,
+                            sigData: file,
+                            sig: reader.result,
+                        });
+                    };
+                }
+                reader.readAsDataURL(e.target.files[0]);
+            }
         }
-    }  
-           if( e.target.name=='signature'){
-            reader.onloadend = () => {
-            setState({
-              ...state,
-              sigData:file,
-              sig: reader.result,
-            });
-          };}
-          reader.readAsDataURL(e.target.files[0]);
-        }
-    }}
- 
+    }
+
     return (
         // <Paper className={sty.paper}>
         <>
-            <Typography variant='h5'>Upload Photo & Signature</Typography><br/>
-            <div style={{ display: 'flex', flexDirection: 'column',paddingLeft:16 }}>
+            <Typography variant='h5'>Upload Photo & Signature</Typography><br />
+            <div style={{ display: 'flex', flexDirection: 'column', paddingLeft: 16 }}>
                 <img src={state.pic} style={{
                     width: '99px',
                     height: '105px',
                     border: 'solid 1px',
                 }} />
                 <Typography variant='subtitle1'>Upload Photo</Typography>
-                <TextField name='picture' inputProps={{accept:"image/*"}} onChange={handleChange} className={sty.textField} helperText='size must not exceed 500kb' type='file' />
+                <TextField name='picture' inputProps={{ accept: "image/*" }} onChange={handleChange} className={sty.textField} helperText='size must not exceed 100kb' type='file' />
                 <img src={state.sig} style={{
                     width: '150px',
                     height: '67px',
                     border: 'solid 1px',
                 }} />
                 <Typography variant='subtitle1'>Upload Signature</Typography>
-                <TextField name='signature' className={sty.textField} type='file' onChange={handleChange}  helperText='size must not exceed 500kb'/>
+                <TextField name='signature' inputProps={{ accept: "image/*" }} className={sty.textField} type='file' onChange={handleChange} helperText='size must not exceed 100kb' />
             </div>
             <Fab style={{ margin: '20px 0' }} color="primary" variant='extended' onClick={upload} >submit & Download Challan</Fab>
-        {/* // </Paper> */}
+            {/* // </Paper> */}
         </>
 
     )

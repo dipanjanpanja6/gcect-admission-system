@@ -3,8 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { TextField, Paper, Grid, MenuItem, Typography, Divider, Fab, InputAdornment, InputBase } from '@material-ui/core';
 import { Form, Field, useFormikContext, Formik } from 'formik';
 import * as Yup from 'yup';
-import './aplicant details/botstrap.css'
-import './aplicant details//hs_mp.css'
+
 import axios from 'axios'
 import { useHistory } from 'react-router-dom';
 import PropType from 'prop-types'
@@ -23,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     },
     textField: {
         marginLeft: theme.spacing(1),
-        marginRight: theme.spacing(1),
+        marginRight: theme.spacing(1), 
         width: '25ch',
     },
     heading: {
@@ -114,16 +113,6 @@ function FormMain(props) {
     Yup.addMethod(Yup.number, 'isSubject', isSubject);
     const schema = Yup.object().shape({
 
-        // Sub1X: Yup.string().required('required'),
-        // Sub2X: Yup.string().nullable(),
-        // Sub3X: Yup.string().required('Required'),
-        // Sub4X: Yup.string().required('Required'),
-        // Sub5X: Yup.string().required('Required'),
-        // Sub6X: Yup.string().nullable(),
-        // Sub7X: Yup.string().nullable(),
-        // Sub8X: Yup.string().nullable(),
-
-
 
         Sub1XII: Yup.string().required('required'),
         Sub2XII: Yup.string().nullable(),
@@ -170,64 +159,6 @@ function FormMain(props) {
         MarksObtainedXII5p: Yup.string().gaterThan(Yup.ref('TotalMarksXII5p')),
         MarksObtainedXII6p: Yup.string().gaterThan(Yup.ref('TotalMarksXII6p')),
         ///
-
-
-
-
-
-
-
-
-
-        // TotalMarksX1: Yup.number().required('Required').max(200, 'max200'),
-        // MarksObtainedX1: Yup.string().gaterThan(Yup.ref('TotalMarksX1')),
-
-        // TotalMarksX2: Yup.number().positive().max(200, 'max200').isSubject(Yup.ref('Sub2X')),
-        // MarksObtainedX2: Yup.string().gaterThan(Yup.ref('TotalMarksX2')),
-
-        // TotalMarksX3: Yup.number().max(200, 'max 200').required('Required'),
-        // MarksObtainedX3: Yup.string().gaterThan(Yup.ref('TotalMarksX3')),
-
-        // TotalMarksX4: Yup.number().max(200, 'max 200').required('Required'),
-        // MarksObtainedX4: Yup.string().gaterThan(Yup.ref('TotalMarksX4')),
-
-        // TotalMarksX5: Yup.number().max(200, 'max 200').required('Required'),
-        // MarksObtainedX5: Yup.string().gaterThan(Yup.ref('TotalMarksX5')),
-
-        // TotalMarksX6: Yup.number().max(200, 'max 200').isSubject(Yup.ref('Sub6X')),
-        // MarksObtainedX6: Yup.string().gaterThan(Yup.ref('TotalMarksX6')),
-
-        // TotalMarksX7: Yup.number().max(200, 'max 200').isSubject(Yup.ref('Sub7X')),
-        // MarksObtainedX7: Yup.string().gaterThan(Yup.ref('TotalMarksX7')),
-
-        // TotalMarksX8: Yup.number().max(200, 'max 200').isSubject(Yup.ref('Sub8X')),
-        // MarksObtainedX8: Yup.string().gaterThan(Yup.ref('TotalMarksX8')),
-
-
-        // TotalMarksX1p: Yup.number().positive('need positive no').required('required'),
-        // MarksObtainedX1p: Yup.string().gaterThan(Yup.ref('TotalMarksX1p')),
-
-        // TotalMarksX2p: Yup.number().positive('need positive no').isSubject(Yup.ref('Sub2X')),
-        // MarksObtainedX2p: Yup.string().gaterThan(Yup.ref('TotalMarksX2p')),
-
-        // TotalMarksX3p: Yup.number().positive().max(200, 'max 200').required('Required'),
-        // MarksObtainedX3p: Yup.string().gaterThan(Yup.ref('TotalMarksX3p')),
-
-        // TotalMarksX4p: Yup.number().positive().max(200, 'max 200').required('Required'),
-        // MarksObtainedX4p: Yup.string().gaterThan(Yup.ref('TotalMarksX4p')),
-
-        // TotalMarksX5p: Yup.number().positive().max(200, 'max 200').required('Required'),
-        // MarksObtainedX5p: Yup.string().gaterThan(Yup.ref('TotalMarksX5p')),
-
-        // TotalMarksX6p: Yup.number().positive().max(200, 'max 200').isSubject(Yup.ref('Sub6X')),
-        // MarksObtainedX6p: Yup.string().gaterThan(Yup.ref('TotalMarksX6p')),
-
-        // TotalMarksX7p: Yup.number().positive().max(200, 'max 200').isSubject(Yup.ref('Sub7X')),
-        // MarksObtainedX7p: Yup.string().gaterThan(Yup.ref('TotalMarksX7p')),
-
-        // TotalMarksX8p: Yup.number().positive().max(200, 'max 200').isSubject(Yup.ref('Sub8X')),
-        // MarksObtainedX8p: Yup.string().gaterThan(Yup.ref('TotalMarksX8p')),
-
 
 
 
@@ -386,244 +317,9 @@ function FormMain(props) {
                 } = props;
                 return (
                     <Form style={{overflowX:'auto'}}>
-                        {/* <Typography variant='h6'>Statement of Marks at (10) Level</Typography>
-                        <table className="table table-sm align-middle small">
-                            <thead>
-                                <tr>
-                                    <th rowSpan="3">Subjects</th>
-                                    <th colSpan="4">Language Group</th>
-                                    <th colSpan="10">Compulsory Group</th>
-                                    <th colSpan="2">Elective Group</th>
-                                </tr>
-                                <tr>
-                                    <td rowSpan="2" colSpan="2">
-                                        <Field className="form-control"
-                                            error={errors.Sub1X && touched.Sub1X}
-                                            helperText={(errors.Sub1X && touched.Sub1X) && errors.Sub1X}
-                                            as={TextField}
-                                            name="Sub1X"
+                 
 
-                                            style={{ margin: 8 }}
-                                            type='number'
-                                            margin='dense'
-                                            select
-                                        >
-                                            {langMenu.map((p, i) => {
-                                                return (
-                                                    <MenuItem key={p} disabled={p == null} value={p}>{p == null ? 'none' : p}</MenuItem>
-                                                )
-                                            })}
-                                        </Field>
-                                    </td>
 
-                                    <td rowSpan="2" colSpan="2">
-                                        <Field className="form-control" name="Sub2X" error={errors.Sub2X && touched.Sub2X}
-                                            helperText={(errors.Sub2X && touched.Sub2X) && errors.Sub2X}
-                                            as={TextField}
-                                            select>
-                                            {langMenu.filter(f => { return f != values.Sub1X }).map((p, i) => {
-                                                return (
-                                                    <MenuItem key={p} value={p}>{p == null ? "none" : p}</MenuItem>
-                                                )
-                                            })}
-
-                                        </Field>
-
-                                    </td>
-                                    <td colSpan="2">1st</td>
-                                    <td colSpan="2">2nd</td>
-                                    <td colSpan="2">3rd</td>
-                                    <td colSpan="2">4th</td>
-                                    <td colSpan="2">5th</td>
-
-                                </tr>
-                                <tr>
-                                    <td colSpan="2">
-                                        <Field
-                                            error={errors.Sub3X && touched.Sub3X}
-                                            helperText={(errors.Sub3X && touched.Sub3X) && errors.Sub3X}
-                                            as={TextField}
-                                            name="Sub3X"
-                                            // label="Marks %"
-                                            className="form-control"
-                                            style={{ margin: 8 }}
-                                            type='number'
-                                            margin='dense'
-                                            select
-                                        >
-                                            {compMenu.map((p, i) => {
-                                                return (
-                                                    <MenuItem key={p} disabled={p == null} value={p}>{p == null ? 'none' : p}</MenuItem>
-                                                )
-                                            })}
-                                        </Field>
-
-                                    </td>
-                                    <td colSpan="2">
-                                        <Field
-                                            error={errors.Sub4X && touched.Sub4X}
-                                            helperText={(errors.Sub4X && touched.Sub4X) && errors.Sub4X}
-                                            as={TextField}
-                                            name="Sub4X"
-                                            className="form-control"
-                                            // label="Marks %"
-                                            style={{ margin: 8 }}
-                                            type='number'
-                                            margin='dense'
-                                            select
-                                        >
-                                            {compMenu.filter(f => { return f != values.Sub3X }).map((p, i) => {
-                                                return (
-                                                    <MenuItem key={p} disabled={p == null} value={p}>{p == null ? 'none' : p}</MenuItem>
-                                                )
-                                            })}
-                                        </Field>
-
-                                    </td>
-                                    <td colSpan="2">
-                                        <Field
-                                            error={errors.Sub5X && touched.Sub5X}
-                                            helperText={(errors.Sub5X && touched.Sub5X) && errors.Sub5X}
-                                            as={TextField}
-                                            name="Sub5X"
-                                            className="form-control"
-                                            style={{ margin: 8 }}
-                                            type='number'
-                                            margin='dense'
-                                            select
-                                        >
-                                            {compMenu.filter(f => { return f != values.Sub3X && f != values.Sub4X }).map((p, i) => {
-                                                return (
-                                                    <MenuItem key={p} disabled={p == null} value={p}>{p == null ? 'none' : p}</MenuItem>
-                                                )
-                                            })}
-                                        </Field>
-
-                                    </td>
-                                    <td colSpan="2">
-                                        <Field
-                                            error={errors.Sub6X && touched.Sub6X}
-                                            helperText={(errors.Sub6X && touched.Sub6X) && errors.Sub6X}
-                                            as={TextField}
-                                            name="Sub6X"
-                                            className="form-control"
-                                            style={{ margin: 8 }}
-                                            type='number'
-                                            margin='dense'
-                                            select
-                                        >
-                                            {compMenu.filter(f => { return f != values.Sub3X && f != values.Sub4X && f !== values.Sub5X }).map((p, i) => {
-                                                return (
-                                                    <MenuItem key={p} value={p}>{p == null ? 'none' : p}</MenuItem>
-                                                )
-                                            })}
-                                        </Field>
-
-                                    </td>
-                                    <td colSpan="2">
-                                        <Field
-                                            error={errors.Sub7X && touched.Sub7X}
-                                            helperText={(errors.Sub7X && touched.Sub7X) && errors.Sub7X}
-                                            as={TextField}
-                                            name="Sub7X"
-                                            className="form-control"
-                                            style={{ margin: 8 }}
-                                            type='number'
-                                            margin='dense'
-                                            select
-                                        >
-                                            {compMenu.filter(f => { return f == null || f != values.Sub3X && f != values.Sub4X && f !== values.Sub5X && f !== values.Sub6X }).map((p, i) => {
-                                                return (
-                                                    <MenuItem key={p} value={p}>{p == null ? 'none' : p}</MenuItem>
-                                                )
-                                            })}
-                                        </Field>
-
-                                    </td>
-                                    <td colSpan="2">
-                                        <Field
-                                            error={errors.Sub8X && touched.Sub8X}
-                                            helperText={(errors.Sub8X && touched.Sub8X) && errors.Sub8X}
-                                            as={TextField}
-                                            name="Sub8X"
-                                            className="form-control"
-                                            // style={{ margin: 8 }}
-                                            type='number'
-                                            select
-                                            margin='dense'
-
-                                        >
-                                            {electMenu.map((p, i) => {
-                                                return (
-                                                    <MenuItem key={p} value={p}>{p == null ? 'none' : p}</MenuItem>
-                                                )
-                                            })}
-                                        </Field>
-
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>&nbsp;</td>
-                                    <td>Th</td>
-                                    <td>Pr</td>
-                                    <td>Th</td>
-                                    <td>Pr</td>
-                                    <td>Th</td>
-                                    <td>Pr</td>
-                                    <td>Th</td>
-                                    <td>Pr</td>
-                                    <td>Th</td>
-                                    <td>Pr</td>
-                                    <td>Th</td>
-                                    <td>Pr</td>
-                                    <td>Th</td>
-                                    <td>Pr</td>
-                                    <td>Th</td>
-                                    <td>Pr</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Total Marks</td>
-                                    <td><Field name="TotalMarksX1" type="number" className="form-control" placeholder="Total" as={TextField} error={errors.TotalMarksX1 && touched.TotalMarksX1} helperText={(errors.TotalMarksX1 && touched.TotalMarksX1) && errors.TotalMarksX1} /></td>
-                                    <td><Field name="TotalMarksX1p" type="number" className="form-control" placeholder="Total" as={TextField} error={errors.TotalMarksX1p && touched.TotalMarksX1p} helperText={(errors.TotalMarksX1p && touched.TotalMarksX1p) && errors.TotalMarksX1p} /></td>
-                                    <td><Field name="TotalMarksX2" type="number" className="form-control" placeholder="Total" as={TextField} error={errors.TotalMarksX2 && touched.TotalMarksX2} helperText={(errors.TotalMarksX2 && touched.TotalMarksX2) && errors.TotalMarksX2} /></td>
-                                    <td><Field name="TotalMarksX2p" type="number" className="form-control" placeholder="Total" as={TextField} error={errors.TotalMarksX2p && touched.TotalMarksX2p} helperText={(errors.TotalMarksX2p && touched.TotalMarksX2p) && errors.TotalMarksX2p} /></td>
-                                    <td><Field name="TotalMarksX3" type="number" className="form-control" placeholder="Total" as={TextField} error={errors.TotalMarksX3 && touched.TotalMarksX3} helperText={(errors.TotalMarksX3 && touched.TotalMarksX3) && errors.TotalMarksX3} /></td>
-                                    <td><Field name="TotalMarksX3p" type="number" className="form-control" placeholder="Total" as={TextField} error={errors.TotalMarksX3p && touched.TotalMarksX3p} helperText={(errors.TotalMarksX3p && touched.TotalMarksX3p) && errors.TotalMarksX3p} /></td>
-                                    <td><Field name="TotalMarksX4" type="number" className="form-control" placeholder="Total" as={TextField} error={errors.TotalMarksX4 && touched.TotalMarksX4} helperText={(errors.TotalMarksX4 && touched.TotalMarksX4) && errors.TotalMarksX4} /></td>
-                                    <td><Field name="TotalMarksX4p" type="number" className="form-control" placeholder="Total" as={TextField} error={errors.TotalMarksX4p && touched.TotalMarksX4p} helperText={(errors.TotalMarksX4p && touched.TotalMarksX4p) && errors.TotalMarksX4p} /></td>
-                                    <td><Field name="TotalMarksX5" type="number" className="form-control" placeholder="Total" as={TextField} error={errors.TotalMarksX5 && touched.TotalMarksX5} helperText={(errors.TotalMarksX5 && touched.TotalMarksX5) && errors.TotalMarksX5} /></td>
-                                    <td><Field name="TotalMarksX5p" type="number" className="form-control" placeholder="Total" as={TextField} error={errors.TotalMarksX5p && touched.TotalMarksX5p} helperText={(errors.TotalMarksX5p && touched.TotalMarksX5p) && errors.TotalMarksX5p} /></td>
-                                    <td><Field name="TotalMarksX6" type="number" className="form-control" placeholder="Total" as={TextField} error={errors.TotalMarksX6 && touched.TotalMarksX6} helperText={(errors.TotalMarksX6 && touched.TotalMarksX6) && errors.TotalMarksX6} /></td>
-                                    <td><Field name="TotalMarksX6p" type="number" className="form-control" placeholder="Total" as={TextField} error={errors.TotalMarksX6p && touched.TotalMarksX6p} helperText={(errors.TotalMarksX6p && touched.TotalMarksX6p) && errors.TotalMarksX6p} /></td>
-                                    <td><Field name="TotalMarksX7" type="number" className="form-control" placeholder="Total" as={TextField} error={errors.TotalMarksX7 && touched.TotalMarksX7p} helperText={(errors.TotalMarksX7p && touched.TotalMarksX7p) && errors.TotalMarksX7p} /></td>
-                                    <td><Field name="TotalMarksX7p" type="number" className="form-control" placeholder="Total" as={TextField} error={errors.TotalMarksX7p && touched.TotalMarksX7p} helperText={(errors.TotalMarksX7p && touched.TotalMarksX7p) && errors.TotalMarksX7p} /></td>
-                                    <td><Field name="TotalMarksX8" type="number" className="form-control" placeholder="Total" as={TextField} error={errors.TotalMarksX8 && touched.TotalMarksX8} helperText={(errors.TotalMarksX8 && touched.TotalMarksX8) && errors.TotalMarksX8} /></td>
-                                    <td><Field name="TotalMarksX8p" type="number" className="form-control" placeholder="Total" as={TextField} error={errors.TotalMarksX8p && touched.TotalMarksX8p} helperText={(errors.TotalMarksX8p && touched.TotalMarksX8p) && errors.TotalMarksX8p} /></td>
-                                </tr>
-                                <tr>
-                                    <td>Marks Obtained</td>
-                                    <td><Field name="MarksObtainedX1" type="number" className="form-control" placeholder="Marks" as={TextField} error={errors.MarksObtainedX1 && touched.MarksObtainedX1} helperText={(errors.MarksObtainedX1 && touched.MarksObtainedX1) && errors.MarksObtainedX1} /></td>
-                                    <td><Field name="MarksObtainedX1p" type="number" className="form-control" placeholder="Marks" as={TextField} error={errors.MarksObtainedX1p && touched.MarksObtainedX1p} helperText={(errors.MarksObtainedX1p && touched.MarksObtainedX1p) && errors.MarksObtainedX1p} /></td>
-                                    <td><Field name="MarksObtainedX2" type="number" className="form-control" placeholder="Marks" as={TextField} error={errors.MarksObtainedX2 && touched.MarksObtainedX2} helperText={(errors.MarksObtainedX2 && touched.MarksObtainedX2) && errors.MarksObtainedX2} /></td>
-                                    <td><Field name="MarksObtainedX2p" type="number" className="form-control" placeholder="Marks" as={TextField} error={errors.MarksObtainedX2p && touched.MarksObtainedX2p} helperText={(errors.MarksObtainedX2p && touched.MarksObtainedX2p) && errors.MarksObtainedX2p} /></td>
-                                    <td><Field name="MarksObtainedX3" type="number" className="form-control" placeholder="Marks" as={TextField} error={errors.MarksObtainedX3 && touched.MarksObtainedX3} helperText={(errors.MarksObtainedX3 && touched.MarksObtainedX3) && errors.MarksObtainedX3} /></td>
-                                    <td><Field name="MarksObtainedX3p" type="number" className="form-control" placeholder="Marks" as={TextField} error={errors.MarksObtainedX3p && touched.MarksObtainedX3p} helperText={(errors.MarksObtainedX3p && touched.MarksObtainedX3p) && errors.MarksObtainedX3p} /></td>
-                                    <td><Field name="MarksObtainedX4" type="number" className="form-control" placeholder="Marks" as={TextField} error={errors.MarksObtainedX4 && touched.MarksObtainedX4} helperText={(errors.MarksObtainedX4 && touched.MarksObtainedX4) && errors.MarksObtainedX4} /></td>
-                                    <td><Field name="MarksObtainedX4p" type="number" className="form-control" placeholder="Marks" as={TextField} error={errors.MarksObtainedX4p && touched.MarksObtainedX4p} helperText={(errors.MarksObtainedX4p && touched.MarksObtainedX4p) && errors.MarksObtainedX4p} /></td>
-                                    <td><Field name="MarksObtainedX5" type="number" className="form-control" placeholder="Marks" as={TextField} error={errors.MarksObtainedX5 && touched.MarksObtainedX5} helperText={(errors.MarksObtainedX5 && touched.MarksObtainedX5) && errors.MarksObtainedX5} /></td>
-                                    <td><Field name="MarksObtainedX5p" type="number" className="form-control" placeholder="Marks" as={TextField} error={errors.MarksObtainedX5p && touched.MarksObtainedX5p} helperText={(errors.MarksObtainedX5p && touched.MarksObtainedX5p) && errors.MarksObtainedX5p} /></td>
-                                    <td><Field name="MarksObtainedX6" type="number" className="form-control" placeholder="Marks" as={TextField} error={errors.MarksObtainedX6 && touched.MarksObtainedX6} helperText={(errors.MarksObtainedX6 && touched.MarksObtainedX6) && errors.MarksObtainedX6} /></td>
-                                    <td><Field name="MarksObtainedX6p" type="number" className="form-control" placeholder="Marks" as={TextField} error={errors.MarksObtainedX6p && touched.MarksObtainedX6p} helperText={(errors.MarksObtainedX6p && touched.MarksObtainedX6p) && errors.MarksObtainedX6p} /></td>
-                                    <td><Field name="MarksObtainedX7" type="number" className="form-control" placeholder="Marks" as={TextField} error={errors.MarksObtainedX7 && touched.MarksObtainedX7} helperText={(errors.MarksObtainedX7 && touched.MarksObtainedX7) && errors.MarksObtainedX7} /></td>
-                                    <td><Field name="MarksObtainedX7p" type="number" className="form-control" placeholder="Marks" as={TextField} error={errors.MarksObtainedX7p && touched.MarksObtainedX7p} helperText={(errors.MarksObtainedX7p && touched.MarksObtainedX7p) && errors.MarksObtainedX7p} /></td>
-                                    <td><Field name="MarksObtainedX8" type="number" className="form-control" placeholder="Marks" as={TextField} error={errors.MarksObtainedX8 && touched.MarksObtainedX8} helperText={(errors.MarksObtainedX8 && touched.MarksObtainedX8) && errors.MarksObtainedX8} /></td>
-                                    <td><Field name="MarksObtainedX8p" type="number" className="form-control" placeholder="Marks" as={TextField} error={errors.MarksObtainedX8p && touched.MarksObtainedX8p} helperText={(errors.MarksObtainedX8p && touched.MarksObtainedX8p) && errors.MarksObtainedX8p} /></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <Divider className={sty.divider} /> */}
                         <Typography variant='h6'>Statement of Marks at (10+2) Level</Typography>
                         <table className="table table-sm align-middle small">
                             <thead>
@@ -802,10 +498,10 @@ function FormMain(props) {
                                     <td><Field name="MarksObtainedXII4p" type="number" className="form-control" placeholder="Marks" as={TextField} error={errors.MarksObtainedXII4p && touched.MarksObtainedXII4p} helperText={(errors.MarksObtainedXII4p && touched.MarksObtainedXII4p) && errors.MarksObtainedXII4p} /></td>
                                     <td><Field name="MarksObtainedXII5" type="number" className="form-control" placeholder="Marks" as={TextField} error={errors.MarksObtainedXII5 && touched.MarksObtainedXII5} helperText={(errors.MarksObtainedXII5 && touched.MarksObtainedXII5) && errors.MarksObtainedXII5} /></td>
                                     <td><Field name="MarksObtainedXII5p" type="number" className="form-control" placeholder="Marks" as={TextField} error={errors.MarksObtainedXII5p && touched.MarksObtainedXII5p} helperText={(errors.MarksObtainedXII5p && touched.MarksObtainedXII5p) && errors.MarksObtainedXII5p} /></td>
-                                    {/* {!values.Sub6XII == '' && <> */}
+                            
                                     <td><Field name="MarksObtainedXII6" disabled={values.Sub6XII == null} value={values.Sub6XII == null ? values.MarksObtainedXII6 = '' : values.MarksObtainedXII6} type="number" className="form-control" placeholder="Marks" as={TextField} error={errors.MarksObtainedXII6 && touched.MarksObtainedXII6} helperText={(errors.MarksObtainedXII6 && touched.MarksObtainedXII6) && errors.MarksObtainedXII6} /></td>
                                     <td><Field name="MarksObtainedXII6p" disabled={values.Sub6XII == null} value={values.Sub6XII == null ? values.MarksObtainedXII6p = '' : values.MarksObtainedXII6p} type="number" className="form-control" placeholder="Marks" as={TextField} error={errors.MarksObtainedXII6p && touched.MarksObtainedXII6p} helperText={(errors.MarksObtainedXII6p && touched.MarksObtainedXII6p) && errors.MarksObtainedXII6p} /></td>
-                                    {/* </>} */}
+                                
                                 </tr>
 
                             </tbody>
