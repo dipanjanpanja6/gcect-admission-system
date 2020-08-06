@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { TextField, Paper, Grid, MenuItem, Typography, Divider, Fab, InputAdornment, InputBase, Checkbox } from '@material-ui/core';
-import { Form, Field, useFormikContext, Formik } from 'formik';
+import { TextField,  MenuItem, Typography, Divider, Fab, InputAdornment, } from '@material-ui/core';
+import { Form, Field, Formik } from 'formik';
 import * as Yup from 'yup';
 import { useHistory } from 'react-router-dom';
 import PropType from 'prop-types'
@@ -136,6 +136,7 @@ function FormMain3(props) {
 
 
             }}
+
             onSubmit={(values, { setSubmitting }) => {
                 setSubmitting(true);
                 const PA = {
@@ -183,20 +184,20 @@ function FormMain3(props) {
                     permanentAddress
                 }
                 console.log(data);
-                
-                Axios.post(`${url}/api/student/${props.id}`,
+
+                Axios.post(`${url}/api/student/${props.id}/family`, 
+                // Axios.put(`${url}/api/student/5180825396`,
                     data,
                     {
                         headers: {
-                            // 'Access-Control-Allow-Origin': '*',
                             'Content-Type': 'application/json',
-                        }
+                        }, credentials: 'include',
                     }
                 ).then((resp) => {
                     console.log(resp);
                     if (resp.data.success === true) {
                         setSubmitting(false);
-                        localStorage.setItem('step',3)
+                        localStorage.setItem('step', 3)
                         props.success(3);
 
                     }
@@ -216,12 +217,6 @@ function FormMain3(props) {
                     values,
                     touched,
                     errors,
-                    dirty,
-                    isSubmitting,
-                    handleChange,
-                    handleBlur,
-                    handleSubmit,
-                    handleReset,
                 } = props;
                 return (
 
@@ -531,7 +526,7 @@ function FormMain3(props) {
 }
 FormMain3.propType = {
     success: PropType.array.isRequired,
-    id:PropType.string.isRequired,
+    id: PropType.string.isRequired,
 
 }
 export default FormMain3

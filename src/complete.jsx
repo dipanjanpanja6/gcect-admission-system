@@ -3,6 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { Grid, Typography, Paper, List, ListItemText, ListItem, Divider } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
+import { url } from './config/config';
+import PropType from 'prop-type';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,15 +44,18 @@ const useStyles = makeStyles((theme) => ({
     }
   }
 }));
+Home.propType={
+  // id:PropType.toString.isRequ
+}
 
-export default function Home() {
+export default function Home(props) {
   const sty = useStyles();
   const history = useHistory()
   const dnlApplication = () => {
-    history.push('/dnlApplication')
+    window.location=`${url}/api/student/${props.id}/challan` 
   }
   const printApplication = () => {
-    history.push('/dnlApplication')
+    window.location=`${url}/api/student/${props.id}/challan`
   }
   const upApplication = () => {
     history.push('/upload')
@@ -64,7 +69,7 @@ export default function Home() {
     <div className={sty.banner} />
     <Grid container justify='center' className={sty.root}>
       <Paper className={sty.paper}>
-        <Typography variant='h5'>Application No : {12}</Typography>
+        <Typography variant='h5'>Application No : {props.id}</Typography>
         <Typography variant='caption' color='error'>Please, deposit application fee to the bank and then update your Payment Status for payment verification.<br/> After verification "Application Form Print" option will be activated.</Typography>
         <Divider/>
         <List>

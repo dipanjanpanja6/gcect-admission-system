@@ -61,17 +61,21 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-function FormMain() {
+function FormMain(props) {
     const history = useHistory()
     const sty = useStyles();
-    const [next, setNext] = React.useState(2)
+    const [next, setNext] = React.useState(0)
     const [id, setId] = useState()
     const formS = (p) => { setNext(p) }
     useEffect(()=>{
+        // var step = localStorage.getItem('step')
+        if(props.auth){
         if(localStorage.getItem('id')){
-            setId(localStorage.getItem('id'))
+            setId(localStorage.getItem('id'))}
         if(localStorage.getItem('step')){
-            setNext(localStorage.getItem('step'))}}
+            setNext(localStorage.getItem('step'))
+            console.log(localStorage.getItem('step'));
+            console.log(next);}}
     },[])
     const b_tech = [
         "CSE", 'IT', 'CT'
@@ -149,6 +153,7 @@ function FormMain() {
 
     })
 
+    console.log(next);
 
     return (
         <Grid container justify='center' alignItems='center' className={sty.root}>
@@ -162,7 +167,7 @@ function FormMain() {
             </Grid>
 
             <Paper className={sty.paper} elevation={10} >
-                {next === 0 && <Formik
+                {next == 0 && <Formik
                     initialValues={{
                         marksPassLastExam: '',
                         yearPassLastExam: '',
@@ -785,8 +790,8 @@ function FormMain() {
                 </Formik>
                 }
                 {/* {next === 1 && <Form1 success={formS} />} */}
-                {next === 2 && <Form2 success={formS} id={id} />}
-                {next === 3 && <Form3 />}
+                {next == 2 && <Form2 success={formS} id={id} />}
+                {next == 3 && <Form3 id={id}/>}
             </Paper>
         </Grid >
     );

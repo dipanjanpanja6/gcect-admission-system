@@ -1,9 +1,9 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { TextField, Paper, Grid, MenuItem, Typography, Divider, Fab, InputAdornment, InputBase, Checkbox } from '@material-ui/core';
-import { Form, Field, useFormikContext, Formik } from 'formik';
-import * as Yup from 'yup';
+import { TextField, Typography, Divider, Fab, InputAdornment, InputBase, Checkbox } from '@material-ui/core';
+import Axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import { url } from '../config/config';
 
 
 
@@ -38,14 +38,36 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-function Form4() {
+function Form4(props) {
     const sty = useStyles();
     const history = useHistory()
+    console.log(props.id);
     const [state, setState] = React.useState({ sigData: '', picData: '' })
     const upload = () => {
-        console.log(state);
+        console.log({pic:state.picData,sig:state.sigData});
         if (state.sigData !== '' && state.picData !== '') {
-            // history.push('/dashboard')
+            // /api/student/<id>/images
+            Axios.post(`${url}/api/student/${props.id}/images`, 
+                {pic:state.picData,sig:state.sigData},
+                // state,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }, credentials: 'include',
+                }
+            ).then((resp) => {
+                console.log(resp);
+                if (resp.data.success === true) { 
+                    localStorage.removeItem('step')
+                    localStorage.removeItem('id')
+
+                    history.push('/dashboard')
+                }
+                if (resp.data.error === true) { 
+                    alert(resp.data.message)
+                }
+            }
+            ).catch(r => console.log(r))
         } else {
             alert('please select both image first !!!')
         }
@@ -87,7 +109,7 @@ function Form4() {
                 <img src={state.pic} alt=" " style={{
                     width: '99px',
                     height: '105px',
-                    border: 'solid 1px', 
+                    border: 'solid 1px',
                 }} />
                 <Typography variant='subtitle1'>Upload Photo</Typography>
                 <TextField name='picture' inputProps={{ accept: "image/*" }} onChange={handleChange} className={sty.textField} helperText='size must not exceed 100kb' type='file' />

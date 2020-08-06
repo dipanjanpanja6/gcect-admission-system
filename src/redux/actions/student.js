@@ -90,11 +90,11 @@ export const checkUser = () => (dispatch) => {
         credentials: 'include',
     }).then(res => {
         res.json().then(d => {
-            // console.log(d);
+            console.log(d);
             if (d.success === true) {
                 dispatch({
                     type: AUTH,
-                    payload: true
+                    payload: d
                 })
             } else if (d.error === true) {
                 console.log(d.message);
