@@ -5,17 +5,20 @@ import { Grid, Typography, Paper, List, ListItemText, ListItem, Divider } from '
 import { useHistory } from 'react-router-dom';
 import { url } from './config/config';
 import PropType from 'prop-type';
-
+import { toast } from 'react-toastify';
+const FileDownload = require("js-file-download");
 const useStyles = makeStyles((theme) => ({
-  root: {
-    padding: ' 12px 50px',
-    // lineHeight:1
+  rootMain:{
+    minHeight:'calc(100vh - 64px)',
     backgroundColor: '#eee',
-    // minHeight: 'calc(100vh - )',
-    [theme.breakpoints.down('sm')]: {
-      // width: 'inherit',
-      padding: 3
-      // overflowX:'auto'
+    [theme.breakpoints.down('xs')]:{
+
+    }
+  },
+  root: {
+    padding: ' 12px 50px', 
+    [theme.breakpoints.down('sm')]: { 
+      padding: 3 
     }
   },
   paper: {
@@ -53,17 +56,30 @@ export default function Home(props) {
   const history = useHistory()
   const dnlApplication = () => {
     // window.location=`${url}/api/student/${props.id}/challan` 
+    fetch(`${url}/api/student/${props.id}/application`,{
+      method: 'GET',
+      credentials: 'include',
+      headers:{
+        'Content-Type':'Application/pdf'
+      }
+  }).then(response => response.blob()).then(response =>
+    FileDownload(response,`Application${props.id}.pdf`) 
+    ).catch(err=>{
+      toast.error(err.message)
+    })
+  }
+  const printApplication = () => { 
     fetch(`${url}/api/student/${props.id}/challan`,{
       method: 'GET',
       credentials: 'include',
-  }).then(res => {
-      // res.json().then(d => {
-        console.log(res);
-      // })
+      headers:{
+        'Content-Type':'Application/pdf'
+      }
+  }).then(response => response.blob()).then(response =>
+    FileDownload(response,`Challan${props.id}.pdf`) 
+    ).catch(err=>{
+      toast.error(err.message)
     })
-  }
-  const printApplication = () => {
-    window.location=`${url}/api/student/${props.id}/challan`
   }
   const upApplication = () => {
     history.push('/upload')
@@ -73,7 +89,7 @@ export default function Home(props) {
   }
 
 
-  return (<>
+  return (<div className={sty.rootMain}>
     <div className={sty.banner} />
     <Grid container justify='center' className={sty.root}>
       <Paper className={sty.paper}>
@@ -84,7 +100,7 @@ export default function Home(props) {
           <ListItem onClick={printApplication} button>
             <ListItemText primary='Print Application Challan' />
           </ListItem>
-          <ListItem onClick={upApplication} button>
+          <ListItem onClick={upApplication} disabled button>
             <ListItemText primary='Upload Documents' />
           </ListItem>
           <ListItem onClick={payApplication} button>
@@ -96,5 +112,5 @@ export default function Home(props) {
         </List>
       </Paper>
     </Grid>
-  </>);
+  </div>);
 }

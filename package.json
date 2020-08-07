@@ -13,6 +13,7 @@
     "dateformat": "^3.0.3",
     "firebase": "^7.14.5",
     "formik": "^2.1.4",
+    "js-file-download": "^0.4.12",
     "prop-type": "0.0.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",

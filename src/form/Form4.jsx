@@ -44,28 +44,26 @@ function Form4(props) {
     console.log(props.id);
     const [state, setState] = React.useState({ sigData: '', picData: '' })
     const upload = () => {
-        console.log({pic:state.picData,sig:state.sigData});
+        // console.log( { pic: state.pic, sig: state.sig });
         if (state.sigData !== '' && state.picData !== '') {
             // /api/student/<id>/images
-            Axios.post(`${url}/api/student/${props.id}/images`, 
-                {pic:state.picData,sig:state.sigData},
-                // state,
-                {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }, credentials: 'include',
-                }
-            ).then((resp) => {
-                console.log(resp);
-                if (resp.data.success === true) { 
-                    localStorage.removeItem('step')
-                    localStorage.removeItem('id')
-
-                    history.push('/dashboard')
-                }
-                if (resp.data.error === true) { 
-                    alert(resp.data.message)
-                }
+            fetch(`${url}/api/student/${props.id}/images`, {
+                method: 'POST',
+                credentials: 'include',
+                headers: { 'Content-type': 'Application/json' },
+                body:  JSON.stringify({pic:state.pic,sig:state.sig})
+            }).then(res => {
+                res.json().then(resp => { 
+                    console.log(resp);
+                    if (resp.success === true) {
+                        localStorage.removeItem('step')
+                        localStorage.removeItem('id') 
+                        history.push('/dashboard')
+                    }
+                    if (resp.error === true) {
+                        alert(resp.message)
+                    }
+                })
             }
             ).catch(r => console.log(r))
         } else {

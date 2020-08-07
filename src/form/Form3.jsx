@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { TextField,  MenuItem, Typography, Divider, Fab, InputAdornment, } from '@material-ui/core';
+import { TextField, MenuItem, Typography, Divider, Fab, InputAdornment, } from '@material-ui/core';
 import { Form, Field, Formik } from 'formik';
 import * as Yup from 'yup';
 import { useHistory } from 'react-router-dom';
@@ -183,30 +183,38 @@ function FormMain3(props) {
                     presentAddress,
                     permanentAddress
                 }
+
                 console.log(data);
+                fetch(`${url}/api/student/${props.id}/family`, {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: { 'Content-type': 'Application/json' },
+                    body: JSON.stringify(data)
+                }).then(res => {
+                    res.json().then(d => {
+                        // Axios.post(`${url}/api/student/${props.id}/family`, 
+                        // // Axios.put(`${url}/api/student/5180825396`,
+                        //     JSON.stringify(data),
+                        //     {
+                        //         headers: {
+                        //             'Content-Type': 'application/json',
+                        //         }, credentials: 'include',
+                        //     }
 
-                Axios.post(`${url}/api/student/${props.id}/family`, 
-                // Axios.put(`${url}/api/student/5180825396`,
-                    JSON.stringify(data),
-                    {
-                        headers: {
-                            'Content-Type': 'application/json',
-                        }, credentials: 'include',
-                    }
-                ).then((resp) => {
-                    console.log(resp);
-                    if (resp.data.success === true) {
-                        setSubmitting(false);
-                        localStorage.setItem('step', 3)
-                        props.success(3);
+                        // ).then((resp) => {
+                        console.log(d);
+                        if (d.success === true) {
+                            setSubmitting(false);
+                            localStorage.setItem('step', 3)
+                            props.success(3);
 
-                    }
-                    if (resp.data.error === true) {
-                        setSubmitting(false);
-                        alert(resp.data.message)
-                    }
-                }
-                ).catch(r => console.log(r))
+                        }
+                        if (d.error === true) {
+                            setSubmitting(false);
+                            alert(d.message)
+                        }
+                    })
+                }).catch(r => console.log(r))
 
             }}
 

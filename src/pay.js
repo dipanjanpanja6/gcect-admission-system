@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { Grid, Typography, Paper, List, TextField, ListItem, Divider, Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
+import transitions from '@material-ui/core/styles/transitions';
+import { url } from './config/config';
+import { toast } from 'react-toastify';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -41,43 +44,53 @@ const useStyles = makeStyles((theme) => ({
             height: '155px',
         }
     },
-    detail:{
+    detail: {
         margin: 12, lineHeight: 3,
-        [theme.breakpoints.down('xs')]:{
-            margin:0
+        [theme.breakpoints.down('xs')]: {
+            margin: 0
         }
     },
-    c:{
+    c: {
         marginTop: 18,
-        [theme.breakpoints.down('xs')]:{
-            justifyContent:'left',
-            paddingLeft:12
+        [theme.breakpoints.down('xs')]: {
+            justifyContent: 'left',
+            paddingLeft: 12
         }
     }
 }));
 
-export default function Home() {
+export default function Pay(props) {
     const sty = useStyles();
-    const history = useHistory()
-    const dnlApplication = () => {
-        history.push('/dnlApplication')
+    const [state, setState] = useState({})
+    const handleChange = (e) => {
+        setState({ ...state, [e.target.name]: e.target.value })
     }
-    const printApplication = () => {
-        history.push('/dnlApplication')
+    const submit = (e) => {
+        e.preventDefault()
+        fetch(`${url}/api/student/${props.id}/transactionId`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-type': 'Application/json' },
+            body: JSON.stringify(state)
+        }).then(res => {
+            res.json().then(resp => {
+                console.log(resp);
+                if (resp.success === true) {
+                    toast.success('Success')
+                }
+                if (resp.error === true) {
+                    toast.error(resp.message)
+                }
+            })
+        }
+        ).catch(r => console.log(r))
     }
-    const upApplication = () => {
-        history.push('/upload')
-    }
-    const payApplication = () => {
-        history.push('/pay')
-    }
-
 
     return (<>
         <div className={sty.banner} />
         <Grid container justify='center' className={sty.root}>
             <Paper className={sty.paper}>
-                <Typography variant='h5'>Application No : {12}</Typography>
+                <Typography variant='h5'>Application No : {props.id}</Typography>
                 <Typography variant='caption' color='error'>Please, deposit application fee to the bank and then update your Payment Status for payment verification. After verification "Application Form Print" option will be activated.</Typography>
                 <Divider />
                 <Grid container justify='center' className={sty.c}>
@@ -90,15 +103,16 @@ export default function Home() {
                         <p>Branch Name	:	<b>Beleghata</b></p>
                         <p>Branch Code		:	<b>001798</b></p>
                     </div>
-                    <div className={sty.detail}>
-                        <p>Applicant Name	:	<b>DIPANJAN  PANJA</b></p>
-                        <p>Total Fees	:<b>15201.00</b></p>
-                        <p>A/c No	:	<b>30089300316</b></p>
-                        <p>Payment Date :<TextField type='date' /></p>
-                        <p>Transaction ID :<TextField type='number' /></p>
-                        {/* <p>Payment Date :<TextField type='date'/></p> */}
-                        <Button color='primary' variant='contained'>submit</Button>
-                    </div>
+                    <form onSubmit={submit}>
+                        <div className={sty.detail}>
+                            <p>Applicant Name	:	<b>DIPANJAN  PANJA</b></p>
+                            <p>Total Fees	:<b>15201.00</b></p>
+                            <p>A/c No	:	<b>30089300316</b></p>
+                            <p>Payment Date :<TextField required type='date' name='transactionDate' onChange={handleChange} /></p>
+                            <p>Transaction ID :<TextField required type='number' name='transactionId' onChange={handleChange} /></p>
+                            <Button color='primary' type='submit' variant='contained'>submit</Button>
+                        </div>
+                    </form>
                 </Grid>
             </Paper>
         </Grid>
