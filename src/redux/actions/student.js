@@ -1,11 +1,11 @@
 import { url } from '../../config/config'
-import { LOGIN, AUTH, ACTIVATE,USER } from '../type'
+import { LOGIN, AUTH, ACTIVATE, USER } from '../type'
 import { toast } from 'react-toastify'
 
 export const login = (data) => (dispatch) => {
 
     fetch(`${url}/api/auth/login`, {
-        method: 'POST', 
+        method: 'POST',
         credentials: 'include',
         headers: { 'Content-type': 'Application/json' },
         body: JSON.stringify(data)
@@ -13,11 +13,16 @@ export const login = (data) => (dispatch) => {
         res.json().then(d => {
             console.log(d);
             /////////////////////////////////////////////////////////////////
-            if(d.success===true){
-            dispatch({
-                type: AUTH,
-                payload: true
-            })}
+            if (d.success === true) {
+                dispatch({
+                    type: AUTH,
+                    payload: true
+                })
+                dispatch({
+                    type: USER,
+                    payload: d
+                })
+            }
             dispatch({
                 type: LOGIN,
                 payload: d
@@ -41,11 +46,12 @@ export const signUp = (data) => (dispatch) => {
     }).then(res => {
         res.json().then(d => {
             // console.log(d);
-            if(d.success===true){
+            if (d.success === true) {
                 dispatch({
                     type: AUTH,
                     payload: true
-                })}
+                })
+            }
             dispatch({
                 type: LOGIN,
                 payload: d
@@ -102,7 +108,7 @@ export const checkUser = () => (dispatch) => {
                 })
 
             } else if (d.error === true) {
-                console.log(d); 
+                console.log(d);
                 dispatch({
                     type: AUTH,
                     payload: false
@@ -122,9 +128,9 @@ export const logout = () => (dispatch) => {
     }).then(res => {
         res.json().then(d => {
             // console.log(d);
-            if(d.success===true){
+            if (d.success === true) {
 
-                dispatch({ 
+                dispatch({
                     type: AUTH,
                     payload: false
                 })
