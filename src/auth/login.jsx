@@ -14,13 +14,13 @@ function Login(props) {
     useEffect(() => {
         if (props.auth) {
             // setLoading(false)
-            if (props.auth.success === true) {
+            if (props.auth=== true) {
                 history.push('/dashboard')
-            } else if (props.auth.error) {
-                alert(props.auth.message)
+            } else if (props.auth) {
+                // alert(props.auth.message)
                 setState({})
                 // toast.error(props.auth.message)
-                console.log(props.auth.message);
+                console.log(props.auth);
 
             }
         }

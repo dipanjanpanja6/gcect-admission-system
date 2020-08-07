@@ -1,5 +1,5 @@
 import { url } from '../../config/config'
-import { LOGIN, AUTH, ACTIVATE } from '../type'
+import { LOGIN, AUTH, ACTIVATE,USER } from '../type'
 import { toast } from 'react-toastify'
 
 export const login = (data) => (dispatch) => {
@@ -94,11 +94,15 @@ export const checkUser = () => (dispatch) => {
             if (d.success === true) {
                 dispatch({
                     type: AUTH,
+                    payload: true
+                })
+                dispatch({
+                    type: USER,
                     payload: d
                 })
+
             } else if (d.error === true) {
-                console.log(d.message);
-                d.message === 'app/network-error' && toast.error('server offline ! please contact team')
+                console.log(d); 
                 dispatch({
                     type: AUTH,
                     payload: false

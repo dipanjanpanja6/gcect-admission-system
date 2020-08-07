@@ -27,20 +27,21 @@ function App(props) {
 		props.logout();
   }
  console.log( props.auth)
+ console.log( props.user)
   return (
     <>
     <Router>
-    <AppBar auth={props.auth===null?false:props.auth.success} out={out}/>
+    <AppBar auth={props.auth} out={out}/>
       <Switch>
       {/* <Route exact path='/' component={Form2}/> */}
       <Route exact path='/' component={Agreement}/>
-      <Route exact path='/login' render={() =>(props.auth===null ?<Loading/>:props.auth.success===false?<Login/>: <Redirect to='/dashboard'/>)}/>
-      <Route exact path='/form'  render={() =>(props.auth===null ?<Loading/>:<Form auth={props.auth.success}/>)} />
-      <Route exact path='/upload' render={() =>(props.auth===null ?<Loading/>:props.auth.success==true?<DD/>: <Redirect to='/login' />)} />
-      <Route exact path='/pay' render={() =>(props.auth===null ?<Loading/>:props.auth.success==true?<Pay/>: <Redirect to='/login' />)} />
+      <Route exact path='/login' render={() =>(props.auth===null ?<Loading/>:props.auth===false?<Login/>: <Redirect to='/dashboard'/>)}/>
+      <Route exact path='/form'  render={() =>(props.auth===null ?<Loading/>:<Form auth={props.auth}/>)} />
+      <Route exact path='/upload' render={() =>(props.auth===null ?<Loading/>:props.auth===true?<DD/>: <Redirect to='/login' />)} />
+      <Route exact path='/pay' render={() =>(props.auth===null ?<Loading/>:props.auth===true?<Pay/>: <Redirect to='/login' />)} />
 
       {/* <Route exact path='/dashboard' component={Menu}/> */}
-      <Route exact path="/dashboard"  render={() =>(props.auth===null ?<Loading/>:props.auth.success===true?<Dashboard id={props.auth.applicantId} />: <Redirect to='/login' />)} />
+      <Route exact path="/dashboard"  render={() =>(props.auth===null ?<Loading/>:props.auth===true?<Dashboard id={props.user?props.user.applicantId:''} />: <Redirect to='/login' />)} />
 
       </Switch>
     </Router>
@@ -62,5 +63,6 @@ const mapToProp = {
 }
 const mapToState = (state) => ({
 	auth: state.admin.auth, 
+	user: state.admin.user, 
 })
 export default connect(mapToState, mapToProp)(App);

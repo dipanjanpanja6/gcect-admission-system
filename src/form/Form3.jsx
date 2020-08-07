@@ -176,7 +176,7 @@ function FormMain3(props) {
                     },
                     guardian: {
                         name: values.guardianName,
-                        number: values.guardianNo,
+                        mobile: values.guardianNo,
                         relation: values.guardianRelation,
                     },
                     familyIncome: values.MIncome,
@@ -187,7 +187,7 @@ function FormMain3(props) {
 
                 Axios.post(`${url}/api/student/${props.id}/family`, 
                 // Axios.put(`${url}/api/student/5180825396`,
-                    data,
+                    JSON.stringify(data),
                     {
                         headers: {
                             'Content-Type': 'application/json',

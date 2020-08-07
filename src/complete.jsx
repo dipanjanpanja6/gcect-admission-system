@@ -52,7 +52,15 @@ export default function Home(props) {
   const sty = useStyles();
   const history = useHistory()
   const dnlApplication = () => {
-    window.location=`${url}/api/student/${props.id}/challan` 
+    // window.location=`${url}/api/student/${props.id}/challan` 
+    fetch(`${url}/api/student/${props.id}/challan`,{
+      method: 'GET',
+      credentials: 'include',
+  }).then(res => {
+      // res.json().then(d => {
+        console.log(res);
+      // })
+    })
   }
   const printApplication = () => {
     window.location=`${url}/api/student/${props.id}/challan`
