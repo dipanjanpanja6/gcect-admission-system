@@ -63,11 +63,11 @@ function App(props) {
           fontFamily: 'monospace'
         }}>
           {'  Made with 😊 by '}
-  <Tooltip arrow title="Hello, I'm Dipanjan Panja from 2017-21,CSE Batch">
+  <Tooltip arrow title="Hello, I'm Dipanjan Panja from 2017-21,CSE Batch 😊">
           <Link color='textPrimary' href="https://facebook.com/dipanjanpanja6">
             Dipanjan Panja
   </Link></Tooltip>{' & '}
-  <Tooltip arrow title="Hello, I'm Aditya from 2017-21,CSE Batch">
+  <Tooltip arrow title="Greetings from Aditya!">
   <Link color='textPrimary' href="https://github.com/Adityashaw">
             Aditya Shaw. 
 
@@ -87,7 +87,8 @@ function App(props) {
 }
 
 App.prototype = {
-  auth: PropType.object.isRequired,
+  auth: PropType.bool.isRequired,
+  user: PropType.string.isRequired,
   checkUser: PropType.func.isRequired,
   logout: PropType.func.isRequired,
 }

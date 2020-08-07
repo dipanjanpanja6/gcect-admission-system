@@ -1,8 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-
-import { Grid, Typography, Paper, List, ListItemText, ListItem, TextField, Divider, Button } from '@material-ui/core';
+import { Grid, Typography, Paper, TextField, Divider, Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
+import PropType from 'prop-types'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,8 +48,10 @@ const useStyles = makeStyles((theme) => ({
       margin:'5px 12px 12px 0'
   }
 }));
-
-export default function Home() {
+Upload.propType = { 
+  id: PropType.string.isRequired,
+}
+export default function Upload() {
   const sty = useStyles();
   const history = useHistory()
   const [state,setState]=React.useState({})

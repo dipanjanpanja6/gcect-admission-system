@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { Grid, Typography, Paper, List, TextField, ListItem, Divider, Button } from '@material-ui/core';
-import { useHistory } from 'react-router-dom';
-import transitions from '@material-ui/core/styles/transitions';
+import { Grid, Typography, Paper,  TextField,  Divider, Button } from '@material-ui/core'; 
 import { url } from './config/config';
 import { toast } from 'react-toastify';
 
@@ -12,7 +10,6 @@ const useStyles = makeStyles((theme) => ({
         padding: ' 12px 50px',
         // lineHeight:1
         backgroundColor: '#eee',
-        // minHeight: 'calc(100vh - )',
         [theme.breakpoints.down('sm')]: {
             // width: 'inherit',
             padding: 3
@@ -22,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
     paper: {
         padding: 15,
         marginBottom: 12,
+        // margin:'0 12%',
         minWidth: '50%',
         [theme.breakpoints.down('xs')]: {
             width: 'inherit',
@@ -86,18 +84,19 @@ export default function Pay(props) {
         ).catch(r => console.log(r))
     }
 
-    return (<>
+   
+        return (<div style={{ minHeight: 'calc(100vh - 64px)'}}>
         <div className={sty.banner} />
         <Grid container justify='center' className={sty.root}>
             <Paper className={sty.paper}>
                 <Typography variant='h5'>Application No : {props.id}</Typography>
-                <Typography variant='caption' color='error'>Please, deposit application fee to the bank and then update your Payment Status for payment verification. After verification "Application Form Print" option will be activated.</Typography>
+                <Typography variant='caption' color='error'>Please, deposit application fee to the bank and then update your Payment Status for payment verification.<br /> After verification "Application Form Print" option will be activated.</Typography>
                 <Divider />
                 <Grid container justify='center' className={sty.c}>
 
                     <div className={sty.detail} >
-                        <p>Registration No	:	<b>R200531100951</b></p>
-                        <p>	Registration Date	:	<b>31-05-2020</b></p>
+                        {/* <p>Registration No	:	<b>R200531100951</b></p> */}
+                        {/* <p>	Registration Date	:	<b>31-05-2020</b></p> */}
                         <p>Course	:	<b>B-Tech/M-Tech</b></p>
                         <p>Bank	:	<b>STATE BANK OF INDIA</b></p>
                         <p>Branch Name	:	<b>Beleghata</b></p>
@@ -105,8 +104,8 @@ export default function Pay(props) {
                     </div>
                     <form onSubmit={submit}>
                         <div className={sty.detail}>
-                            <p>Applicant Name	:	<b>DIPANJAN  PANJA</b></p>
-                            <p>Total Fees	:<b>15201.00</b></p>
+                            {/* <p>Applicant Name	:	<b>DIPANJAN  PANJA</b></p> */}
+                            {/* <p>Total Fees	:<b>15201.00</b></p> */}
                             <p>A/c No	:	<b>30089300316</b></p>
                             <p>Payment Date :<TextField required type='date' name='transactionDate' onChange={handleChange} /></p>
                             <p>Transaction ID :<TextField required type='number' name='transactionId' onChange={handleChange} /></p>
@@ -116,5 +115,5 @@ export default function Pay(props) {
                 </Grid>
             </Paper>
         </Grid>
-    </>);
+    </div>);
 }

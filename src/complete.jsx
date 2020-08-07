@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Typography, Paper, List, ListItemText, ListItem, Divider } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { url } from './config/config';
-import PropType from 'prop-type';
+import PropType from 'prop-types';
 import { toast } from 'react-toastify';
 const FileDownload = require("js-file-download");
 const useStyles = makeStyles((theme) => ({
@@ -47,11 +47,12 @@ const useStyles = makeStyles((theme) => ({
     }
   }
 }));
-Home.propType={
-  // id:PropType.toString.isRequ
-}
 
-export default function Home(props) {
+
+Dashboard.propType={
+  id:PropType.string.isRequired
+}
+export default function Dashboard(props) {
   const sty = useStyles();
   const history = useHistory()
   const dnlApplication = () => {

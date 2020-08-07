@@ -1,7 +1,8 @@
 
 import React from 'react'
 import { Grid, Paper, Typography, makeStyles, Button, Checkbox } from '@material-ui/core'
-import { Link, Redirect, useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 const useStyle = makeStyles((theme) => ({
     paper: {
@@ -13,23 +14,23 @@ const useStyle = makeStyles((theme) => ({
 
 const Test = () => {
     const sty = useStyle()
-const history=useHistory()
-    const [agree,setAgree]=React.useState(false)
+    const history = useHistory()
+    const [agree, setAgree] = React.useState(false)
 
-    function processNext(){
-        if(agree){
-            history.push('/form')
-        }else{
+    function processNext() {
+        if (agree) {
+            history.push('/form', { agree: agree })
+        } else {
 
-            alert('You have to agree the terms & conditions to proceed further !!')
+            toast.warn('You have to agree the terms & conditions to proceed further !!')
         }
     }
 
     return (
         <Grid style={{ backgroundColor: '#eee' }} container>
             <Paper className={sty.paper} style={{ textAlign: "justify" }}>
-                <Typography  align='center' gutterBottom variant='h4'>ADMISSION NOTICE {new Date().getFullYear()}</Typography>
-                <Typography  variant='subtitle2'>Online application for admission to B. Tech /M. Tech program for the academic session 2019-20 will commence from 04th July 2019 at 10 AM only through web portal of the college website <Link target='_blank'rel="noopener noreferrer" to ='www.gcect.ac.in'>www.gcect.ac.in</Link>.</Typography>
+                <Typography align='center' gutterBottom variant='h4'>ADMISSION NOTICE {new Date().getFullYear()}</Typography>
+                <Typography variant='subtitle2'>Online application for admission to B. Tech /M. Tech program for the academic session 2019-20 will commence from 04th July 2019 at 10 AM only through web portal of the college website <a target='_blank' rel="noopener noreferrer" href='http://www.gcect.ac.in'>www.gcect.ac.in</a>.</Typography>
                 <p><strong>For any online application related issue and queries, please write us to:</strong><a href="mailto:gcectwb@gmail.com?subject=Enquiry">gcectwb@gmail.com</a></p>
                 <p><strong>ONLINE ADMISSION PROCEDURE</strong></p>
                 <p>1. Visit College website and click&nbsp;Apply Online tab.</p>
@@ -74,26 +75,26 @@ const history=useHistory()
             <Paper className={sty.paper} style={{ textAlign: "justify" }}>
                 <Typography align="center" variant="h4" gutterBottom>Terms & Conditions</Typography>
                 {/* <p> */}
-                    <p>I have very carefully read the regulation of the institute and have understood that if my class attendance in an academic semester falls&nbsp;<strong><em>below 75%</em></strong> of the total number of classes held in the semester would render me <strong>DIS-QUALIFIED&nbsp;</strong>&nbsp;to seat for the end semester examination of that academic session as per the existing ACADEMIC REGULATION of the institute.</p>
+                <p>I have very carefully read the regulation of the institute and have understood that if my class attendance in an academic semester falls&nbsp;<strong><em>below 75%</em></strong> of the total number of classes held in the semester would render me <strong>DIS-QUALIFIED&nbsp;</strong>&nbsp;to seat for the end semester examination of that academic session as per the existing ACADEMIC REGULATION of the institute.</p>
 
-                    <p>I further declare that I shall&nbsp;<strong>NOT</strong> request the college authorities for any relaxation/exemption on attendance percentage on any ground whatsoever.</p>
+                <p>I further declare that I shall&nbsp;<strong>NOT</strong> request the college authorities for any relaxation/exemption on attendance percentage on any ground whatsoever.</p>
 
-                    <p>In the light of the above-mentioned regulations I promise that</p>
+                <p>In the light of the above-mentioned regulations I promise that</p>
 
-                    <p>1. I will <strong>NOT&nbsp;</strong>take part in ragging and in the event of any such happening, will &nbsp;intimate&nbsp;&nbsp;the college authority immediately.</p>
+                <p>1. I will <strong>NOT&nbsp;</strong>take part in ragging and in the event of any such happening, will &nbsp;intimate&nbsp;&nbsp;the college authority immediately.</p>
 
-                    <p>2. I will <strong>NOT</strong> take up any job assignment, in the form of employment or business, during my class-hours of&nbsp;&nbsp;the College.</p>
+                <p>2. I will <strong>NOT</strong> take up any job assignment, in the form of employment or business, during my class-hours of&nbsp;&nbsp;the College.</p>
 
-                    <p>3. I will <strong>NOT</strong> attend any coaching centre or private tuition or any training institute, during my class-hours of&nbsp;&nbsp;the College.</p>
+                <p>3. I will <strong>NOT</strong> attend any coaching centre or private tuition or any training institute, during my class-hours of&nbsp;&nbsp;the College.</p>
 
-                    <p>&nbsp;</p>
+                <p>&nbsp;</p>
 
-                    <p>In addition to the above-mentioned pledges made by me, I further commit that I will regularly follow the Notices stuck on the college notice board and/or uploaded on the college website.</p>
+                <p>In addition to the above-mentioned pledges made by me, I further commit that I will regularly follow the Notices stuck on the college notice board and/or uploaded on the college website.</p>
                 {/* </p> */}
             </Paper>
 
             <Paper className={sty.paper} style={{ textAlign: "justify" }}>
-                <Typography align='center'  variant="h4" gutterBottom>Important Documents</Typography>
+                <Typography align='center' variant="h4" gutterBottom>Important Documents</Typography>
                 <div align="left">
                     <h3><a href="admin/pages/pic/download/College Brochure.pdf" target="_blank" rel="noopener noreferrer">College Brochure</a></h3>
                     {/* <!--<h3><a href="docs/College Brochure.pdf" target="_blank">College Brochure</a></h3>--> */}
@@ -105,31 +106,33 @@ const history=useHistory()
                     <Typography variant="h4" gutterBottom>!!! Notice !!!</Typography>
                     <br />
                     <p >Please Go to Student Login and Update Payment and Upload Photo &amp; Signature to complete the Application Process</p>
-                    <p >You will get SMS alert with your Application Id, Username &amp; Password only after completion of the 3rd part of the application form which includes your address, family details and other details.</p>
-                    <p >If in case SMS with login details will not reach yor mobile use your registered <strong>mobile number</strong> &amp; <strong>Date of Birth</strong> <br />
+                    <p >You will get SMS alert with your Application Id, Username &amp; Password only after completion of the 3rd part of the application form which includes your Photo and signature.</p>
+                    <p >If in case SMS with login details will not reach yor mobile use your registered <strong>mobile number (xxxxxxxxxx)</strong> &amp; <strong>Date of Birth (YYYY-MM-DD)</strong> <br />
                           as the <strong>User Id &amp; Password</strong></p>
                 </center>
             </Paper>
-            <p style={{margin:12,align:'center'}}>I have read the instructions (including  College admission rules) carefully and I shall abide by the decision taken by the college authority in this regard.
-             </p> <br/>
-                    <table width="100%" style={{marginBottom:20}} border="0" cellspacing="0" cellpadding="0">
-                      <tr>
-                        <td width="40%">&nbsp;</td>
-                        <td width="4%">
-                            <div align="center">
-                                <Checkbox onChange={()=>{setAgree(!agree)}} />
+            <p style={{ margin: 12, align: 'center' }}>I have read the instructions (including  College admission rules) carefully and I shall abide by the decision taken by the college authority in this regard.
+             </p> <br />
+            <table width="100%" style={{ marginBottom: 20 }} border="0" cellSpacing="0" cellPadding="0">
+                <tbody>
+                <tr>
+                    <td width="40%">&nbsp;</td>
+                    <td width="4%">
+                        <div align="center">
+                            <Checkbox onChange={() => { setAgree(!agree) }} />
                         </div>
-                        </td>
-                        <td  width="56%">I Agree all terms &amp; conditions</td>
-                      </tr>
-                      <tr>
-                        <td colspan="4"><div align="center"><br/>
-                         <Button onClick={processNext} variant='contained' color='primary'>Proceed </Button> 
-                         
-                        </div></td>
-                      </tr>
-                    </table>
-                  
+                    </td>
+                    <td width="56%">I Agree all terms &amp; conditions</td>
+                </tr>
+                <tr>
+                    <td colSpan="4"><div align="center"><br />
+                        <Button onClick={processNext} variant='contained' color='primary'>Proceed </Button>
+
+                    </div></td>
+                </tr>
+            </tbody>
+            </table>
+
 
             {/* </Paper> */}
         </Grid >

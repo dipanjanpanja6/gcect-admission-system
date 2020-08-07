@@ -2,10 +2,9 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import {Toolbar,Link, CircularProgress} from '@material-ui/core'; 
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu'; 
+import Button from '@material-ui/core/Button'; 
 import { Link as RouterLink, useHistory } from 'react-router-dom';
+import PropType from 'prop-types'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,21 +36,20 @@ console.log(props.auth);
       <AppBar position="static">
         <Toolbar>
          
-          {/* <Typography variant="h6" className={classes.title}>
-            GCECT Admission Portal
-          </Typography> */}
+          
           <Link to='/' underline='none' component={RouterLink} className={classes.title} variant="h6" noWrap>
           GCECT Admission Portal
           </Link>
           <div className={classes.grow} />
-        {/* {window.location.pathname!=='/login' &&  <Button onClick={login} color="inherit">Login</Button>} */}
-        {props.auth===true ? <Button onClick={props.out} color="inherit">Logout</Button>
+         {props.auth===true ? <Button onClick={props.out} color="inherit">Logout</Button>
         :props.auth===false ?<Button onClick={login} color="inherit">Login</Button>
         :props.auth===null?<CircularProgress/>:""}
-        {/* {&& <Button onClick={login} color="inherit">Login</Button>} */}
-        </Toolbar>
+         </Toolbar>
       </AppBar> 
     </div>
   );
+}
+Appbar.propType = { 
+  auth: PropType.bool.isRequired,
 }
 export default Appbar;

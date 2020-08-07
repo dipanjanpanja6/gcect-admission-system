@@ -192,16 +192,6 @@ function FormMain3(props) {
                     body: JSON.stringify(data)
                 }).then(res => {
                     res.json().then(d => {
-                        // Axios.post(`${url}/api/student/${props.id}/family`, 
-                        // // Axios.put(`${url}/api/student/5180825396`,
-                        //     JSON.stringify(data),
-                        //     {
-                        //         headers: {
-                        //             'Content-Type': 'application/json',
-                        //         }, credentials: 'include',
-                        //     }
-
-                        // ).then((resp) => {
                         console.log(d);
                         if (d.success === true) {
                             setSubmitting(false);

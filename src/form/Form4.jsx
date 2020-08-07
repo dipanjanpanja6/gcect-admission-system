@@ -1,10 +1,9 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { TextField, Typography, Divider, Fab, InputAdornment, InputBase, Checkbox } from '@material-ui/core';
-import Axios from 'axios';
+import { TextField, Typography, Fab, } from '@material-ui/core'; 
 import { useHistory } from 'react-router-dom';
 import { url } from '../config/config';
-
+import PropType from 'prop-types'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -124,5 +123,8 @@ function Form4(props) {
         </>
 
     )
+}
+Form4.propType = { 
+    id: PropType.string.isRequired,
 }
 export default Form4
