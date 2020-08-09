@@ -8,7 +8,8 @@ import PropType from 'prop-types'
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+    flexGrow: 1, 
+    display:'flex'
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -18,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: { 
     color: '#fff',
-    fontSize: 'x-large', 
+    fontSize: 'large', 
 
 },
 }));
@@ -30,14 +31,14 @@ function Appbar(props) {
 const login=()=>{
   history.push('/login')
 }
-console.log(props.auth);
+// console.log(props.auth);
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-         
+         {/* <img height={35} alt='logo' src={require('../component/static/logo.webp')}/> */}
           
-          <Link to='/' underline='none' component={RouterLink} className={classes.title} variant="h6" noWrap>
+          <Link to='/' underline='none' component={RouterLink} className={classes.title} variant="h1" noWrap>
           GCECT Admission Portal
           </Link>
           <div className={classes.grow} />

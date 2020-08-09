@@ -1,5 +1,5 @@
 import { url } from '../../config/config'
-import { LOGIN, AUTH, ACTIVATE, USER } from '../type'
+import { LOGIN, AUTH,  USER } from '../type'
 import { toast } from 'react-toastify'
 
 export const login = (data) => (dispatch) => {
@@ -11,9 +11,8 @@ export const login = (data) => (dispatch) => {
         body: JSON.stringify(data)
     }).then(res => {
         res.json().then(d => {
-            console.log(d);
-            /////////////////////////////////////////////////////////////////
-            if (d.success === true) {
+            // console.log(d);
+             if (d.success === true) {
                 dispatch({
                     type: AUTH,
                     payload: true
@@ -22,81 +21,28 @@ export const login = (data) => (dispatch) => {
                     type: USER,
                     payload: d
                 })
-            }
-            dispatch({
-                type: LOGIN,
-                payload: d
-            })
-
-        })
-    }).catch(r => {
-        console.log(r);
-        toast.error('Something went wrong ! Try again')
-    })
-}
-
-export const signUp = (data) => (dispatch) => {
-    // console.log(data);
-
-    fetch(`${url}/api/signup`, {
-        method: 'POST',
-        credentials: 'include',
-        headers: { 'Content-type': 'Application/json' },
-        body: JSON.stringify(data)
-    }).then(res => {
-        res.json().then(d => {
-            // console.log(d);
-            if (d.success === true) {
+            } else {
+                toast.error(d.message)
                 dispatch({
-                    type: AUTH,
-                    payload: true
-                })
-            }
-            dispatch({
-                type: LOGIN,
-                payload: d
-            })
-
-        })
-    }).catch(r => {
-        console.log(r);
-        toast.error('Something went wrong ! Try again')
-
-    })
-}
-export const activate = (data) => (dispatch) => {
-
-    fetch(`${url}/activate`, {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-            'Content-Type': 'Application/json',
-        },
-        body: JSON.stringify(data)
-    }).then(res => {
-        res.json().then(d => {
-            // console.log(d);
-            if (d.success === true) {
-                window.location = '/home'
-            } else if (d.error) {
-                dispatch({
-                    type: ACTIVATE,
+                    type: LOGIN,
                     payload: d
                 })
             }
+
         })
     }).catch(r => {
         console.log(r);
         toast.error('Something went wrong ! Try again')
     })
 }
+// 9831649012
 export const checkUser = () => (dispatch) => {
     fetch(`${url}/api/auth/checkStudent`, {
         method: 'GET',
         credentials: 'include',
     }).then(res => {
         res.json().then(d => {
-            console.log(d);
+            // console.log(d);
             if (d.success === true) {
                 dispatch({
                     type: AUTH,

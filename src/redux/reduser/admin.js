@@ -1,9 +1,8 @@
-import {LOGIN, ACTIVATE, AUTH,USER,} from '../type'
+import {LOGIN,  AUTH,USER,} from '../type'
 
 const initialState = {
     login: {}, 
-    activate:'',
-    auth:null, 
+     auth:null, 
     user:'',
 
 
@@ -29,11 +28,7 @@ export default function (state = initialState, actions) {
                 ...state,
                 login: actions.payload
             }
-        case ACTIVATE:
-            return {
-                ...state,
-                activate: actions.payload
-            }
+       
 
 
         default:

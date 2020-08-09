@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { Grid, Typography, Paper,  TextField,  Divider, Button } from '@material-ui/core'; 
+import { Grid, Typography, Paper, TextField, Divider,  Fab, CircularProgress } from '@material-ui/core';
 import { url } from './config/config';
 import { toast } from 'react-toastify';
 
@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
         padding: ' 12px 50px',
         // lineHeight:1
-        backgroundColor: '#eee',
+        backgroundColor: theme.palette.background.default,
         [theme.breakpoints.down('sm')]: {
             // width: 'inherit',
             padding: 3
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
     },
     banner: {
-        backgroundImage: "url(" + require('./banner.jpg') + ")",
+        backgroundImage: "url(" + require('./component/static/banner.webp') + ")",
         width: '100%',
         height: '267px',
         backgroundPositionX: 'right',
@@ -60,10 +60,12 @@ const useStyles = makeStyles((theme) => ({
 export default function Pay(props) {
     const sty = useStyles();
     const [state, setState] = useState({})
+    const [loading, setLoading] = useState(false)
     const handleChange = (e) => {
         setState({ ...state, [e.target.name]: e.target.value })
     }
     const submit = (e) => {
+        setLoading(true)
         e.preventDefault()
         fetch(`${url}/api/student/${props.id}/transactionId`, {
             method: 'POST',
@@ -72,6 +74,7 @@ export default function Pay(props) {
             body: JSON.stringify(state)
         }).then(res => {
             res.json().then(resp => {
+                setLoading(false)
                 console.log(resp);
                 if (resp.success === true) {
                     toast.success('Success')
@@ -81,11 +84,15 @@ export default function Pay(props) {
                 }
             })
         }
-        ).catch(r => console.log(r))
+        ).catch(r => {
+            setLoading(false)
+            toast.error('Internal server error! Please try again later.')
+            console.log(r)
+        })
     }
 
-   
-        return (<div style={{ minHeight: 'calc(100vh - 64px)'}}>
+
+    return (<div style={{ minHeight: 'calc(100vh - 64px)' }}>
         <div className={sty.banner} />
         <Grid container justify='center' className={sty.root}>
             <Paper className={sty.paper}>
@@ -107,9 +114,10 @@ export default function Pay(props) {
                             {/* <p>Applicant Name	:	<b>DIPANJAN  PANJA</b></p> */}
                             {/* <p>Total Fees	:<b>15201.00</b></p> */}
                             <p>A/c No	:	<b>30089300316</b></p>
-                            <p>Payment Date :<TextField required type='date' name='transactionDate' onChange={handleChange} /></p>
-                            <p>Transaction ID :<TextField required type='number' name='transactionId' onChange={handleChange} /></p>
-                            <Button color='primary' type='submit' variant='contained'>submit</Button>
+                            <div>Payment Date : <TextField required type='date' name='transactionDate' onChange={handleChange} /></div>
+                            <div>Transaction ID : <TextField required type='number' name='transactionId' onChange={handleChange} /></div>
+                            <Fab size='medium' disabled={loading} style={{ margin: '20px 0' }} color="primary" variant='extended' type='submit' >
+                                {loading ? <><p>Processing</p><CircularProgress /> </> : 'submit'}</Fab>
                         </div>
                     </form>
                 </Grid>

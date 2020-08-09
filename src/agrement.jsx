@@ -1,15 +1,32 @@
 
 import React from 'react'
-import { Grid, Paper, Typography, makeStyles, Button, Checkbox } from '@material-ui/core'
-import { Link, useHistory } from 'react-router-dom'
+import { Grid, Paper, Typography, makeStyles,  Checkbox, Fab } from '@material-ui/core'
+import {  useHistory } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 const useStyle = makeStyles((theme) => ({
+    root:{
+        backgroundColor: theme.palette.background.default,
+    },
     paper: {
         padding: 12,
         margin: 20,
         width: '100%'
-    }
+    },
+    banner: {
+        backgroundImage: "url(" + require("./component/static/banner.webp") + ")",
+        width: '100%',
+        height: '267px',
+        backgroundPositionX: 'right',
+        backgroundPositionY: 'bottom',
+    
+        background: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+        [theme.breakpoints.down('xs')]: {
+          height: '155px',
+        }
+      }
 }))
 
 const Test = () => {
@@ -27,7 +44,10 @@ const Test = () => {
     }
 
     return (
-        <Grid style={{ backgroundColor: '#eee' }} container>
+        <Grid className={sty.root}>
+    <div className={sty.banner} />
+
+        <Grid  container>
             <Paper className={sty.paper} style={{ textAlign: "justify" }}>
                 <Typography align='center' gutterBottom variant='h4'>ADMISSION NOTICE {new Date().getFullYear()}</Typography>
                 <Typography variant='subtitle2'>Online application for admission to B. Tech /M. Tech program for the academic session 2019-20 will commence from 04th July 2019 at 10 AM only through web portal of the college website <a target='_blank' rel="noopener noreferrer" href='http://www.gcect.ac.in'>www.gcect.ac.in</a>.</Typography>
@@ -93,12 +113,12 @@ const Test = () => {
                 {/* </p> */}
             </Paper>
 
-            <Paper className={sty.paper} style={{ textAlign: "justify" }}>
+            <Paper className={sty.paper} style={{ textAlign: "center" }}>
                 <Typography align='center' variant="h4" gutterBottom>Important Documents</Typography>
-                <div align="left">
+                
                     <h3><a href="admin/pages/pic/download/College Brochure.pdf" target="_blank" rel="noopener noreferrer">College Brochure</a></h3>
                     {/* <!--<h3><a href="docs/College Brochure.pdf" target="_blank">College Brochure</a></h3>--> */}
-                </div>
+                
             </Paper>
 
             <Paper className={sty.paper} style={{ color: '#f00' }}>
@@ -111,32 +131,20 @@ const Test = () => {
                           as the <strong>User Id &amp; Password</strong></p>
                 </center>
             </Paper>
-            <p style={{ margin: 12, align: 'center' }}>I have read the instructions (including  College admission rules) carefully and I shall abide by the decision taken by the college authority in this regard.
-             </p> <br />
-            <table width="100%" style={{ marginBottom: 20 }} border="0" cellSpacing="0" cellPadding="0">
-                <tbody>
-                <tr>
-                    <td width="40%">&nbsp;</td>
-                    <td width="4%">
-                        <div align="center">
-                            <Checkbox onChange={() => { setAgree(!agree) }} />
-                        </div>
-                    </td>
-                    <td width="56%">I Agree all terms &amp; conditions</td>
-                </tr>
-                <tr>
-                    <td colSpan="4"><div align="center"><br />
-                        <Button onClick={processNext} variant='contained' color='primary'>Proceed </Button>
+            <Grid container justify='center' alignItems='center' style={{paddingBottom:50}}>
+            <Typography color='textPrimary' style={{ margin: 12, width:'100%', align: 'center',textAlign:'center' }}>I have read the instructions (including  College admission rules) carefully and I shall abide by the decision taken by the college authority in this regard.
+             </Typography>
+             <Grid container justify='center' alignItems='center'>
 
-                    </div></td>
-                </tr>
-            </tbody>
-            </table>
-
+                    <Checkbox onChange={() => { setAgree(!agree) }} /><Typography color='textPrimary'>I Agree all terms &amp; conditions</Typography>
+             </Grid>
+             <br/>
+                        <Fab variant='extended' onClick={processNext}  color='primary'>Proceed </Fab>
+</Grid>
 
             {/* </Paper> */}
         </Grid >
-
+</Grid>
     )
 }
 

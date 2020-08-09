@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { Grid, Typography, Paper, List, ListItemText, ListItem } from '@material-ui/core';
+import { Grid, Typography, Paper, } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 
   },
   banner: {
-    backgroundImage: "url(" + require('./banner.jpg') + ")",
+    backgroundImage: "url(" + require('./component/static/banner.webp') + ")", 
     width: '100%',
     height: '267px',
     backgroundPositionX: 'right',

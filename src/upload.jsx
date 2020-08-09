@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 
   },
   banner: {
-    backgroundImage: "url(" + require('./banner.jpg') + ")",
+    backgroundImage: "url(" + require('./component/static/banner.webp') + ")",
     width: '100%',
     height: '267px',
     backgroundPositionX: 'right',

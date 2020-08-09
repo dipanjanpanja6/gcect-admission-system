@@ -5,7 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import Form from './form/Form'
-import Form2 from './form/Form4'
+// import Form2 from './form/Form4'
 import Agreement from './agrement'
 import Dashboard from './complete'
 import AppBar from './app bar/AppBar'
@@ -14,27 +14,35 @@ import Pay from './pay'
 import Login from './auth/login'
 import Loading from './component/loading'
 
-// import Test from './main'
+import Error from './component/Error'
 
 import { connect } from 'react-redux';
 import { checkUser, logout } from './redux/actions/student'
 import PropType from 'prop-types'
-import { Typography, Link, Divider, Tooltip } from '@material-ui/core';
+import { Typography, Link, Divider, Tooltip, ThemeProvider, createMuiTheme, useMediaQuery, Grid } from '@material-ui/core';
 
 function App(props) {
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+
   useEffect(() => {
-    props.checkUser()
-    console.log("tiger");
+    props.checkUser() 
   }, [])
 
-  const out = () => {
-    console.log("auth");
+  const out = () => { 
     props.logout();
-  }
-  console.log(props.auth)
-  console.log(props.user)
+  } 
+  const theme = React.useMemo(
+    () =>
+      createMuiTheme({
+        palette: {
+          type: prefersDarkMode ? 'dark' : 'light',
+        },
+      }),
+    [prefersDarkMode],
+  );
   return (
     <>
+     <ThemeProvider theme={theme}>
       <Router>
         <AppBar auth={props.auth} out={out} />
         <Switch>
@@ -47,13 +55,15 @@ function App(props) {
 
           {/* <Route exact path='/dashboard' component={Menu}/> */}
           <Route exact path="/dashboard" render={() => (props.auth === null ? <Loading /> : props.auth === true ? <Dashboard id={props.user ? props.user.applicantId : ''} /> : <Redirect to='/login' />)} />
-
+          <Route component={Error}/>
         </Switch>
       </Router>
 
       <ToastContainer />
-      <div style={{
-        position: "fixed",
+      <Grid style={{
+        position: "fixed", width:'100%',
+        background:'#00000038',
+        zIndex:999999,
         bottom: 0,
         left: 2
       }}>
@@ -75,12 +85,12 @@ function App(props) {
           {' © '}
           {new Date().getFullYear()}{' '}
           <Link color='textPrimary' href="https://gcect.ac.in">
-            GCECT
+            GCECT.
 
-  </Link>
-          {'. All rights reserved.'}
+  </Link> 
         </Typography>
-      </div>
+      </Grid>
+</ThemeProvider>
     </>
 
   );

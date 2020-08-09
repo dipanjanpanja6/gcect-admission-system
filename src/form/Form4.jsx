@@ -1,16 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { TextField, Typography, Fab, } from '@material-ui/core'; 
+import { TextField, Typography, Fab, CircularProgress, } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { url } from '../config/config';
 import PropType from 'prop-types'
-
+import { useEffect } from 'react';
+import { checkUser } from '../redux/actions/student'
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
     root: {
         padding: 50,
         // lineHeight:1
-        backgroundColor: '#eee',
+        backgroundColor: theme.palette.background.default,
         [theme.breakpoints.down('sm')]: {
             // width: 'inherit',
             padding: 3
@@ -40,9 +42,15 @@ const useStyles = makeStyles((theme) => ({
 function Form4(props) {
     const sty = useStyles();
     const history = useHistory()
+    const [loading, setLoading] = useState(false);
     console.log(props.id);
     const [state, setState] = React.useState({ sigData: '', picData: '' })
+    useEffect(() => {
+        props.checkUser()
+    }, [])
     const upload = () => {
+        setLoading(true)
+
         // console.log( { pic: state.pic, sig: state.sig });
         if (state.sigData !== '' && state.picData !== '') {
             // /api/student/<id>/images
@@ -50,13 +58,15 @@ function Form4(props) {
                 method: 'POST',
                 credentials: 'include',
                 headers: { 'Content-type': 'Application/json' },
-                body:  JSON.stringify({pic:state.pic,sig:state.sig})
+                body: JSON.stringify({ pic: state.pic, sig: state.sig })
             }).then(res => {
-                res.json().then(resp => { 
+                res.json().then(resp => {
+                    setLoading(false)
+
                     console.log(resp);
                     if (resp.success === true) {
                         localStorage.removeItem('step')
-                        localStorage.removeItem('id') 
+                        localStorage.removeItem('id')
                         history.push('/dashboard')
                     }
                     if (resp.error === true) {
@@ -64,7 +74,10 @@ function Form4(props) {
                     }
                 })
             }
-            ).catch(r => console.log(r))
+            ).catch(r => {
+                setLoading(false)
+                console.log(r)
+            })
         } else {
             alert('please select both image first !!!')
         }
@@ -98,33 +111,40 @@ function Form4(props) {
         }
     }
 
-    return (
-        // <Paper className={sty.paper}>
-        <>
-            <Typography variant='h5'>Upload Photo & Signature</Typography><br />
-            <div style={{ display: 'flex', flexDirection: 'column', paddingLeft: 16 }}>
-                <img src={state.pic} alt=" " style={{
-                    width: '99px',
-                    height: '105px',
-                    border: 'solid 1px',
-                }} />
-                <Typography variant='subtitle1'>Upload Photo</Typography>
-                <TextField name='picture' inputProps={{ accept: "image/*" }} onChange={handleChange} className={sty.textField} helperText='size must not exceed 100kb' type='file' />
-                <img src={state.sig} alt="signature" style={{
-                    width: '150px',
-                    height: '67px',
-                    border: 'solid 1px',
-                }} />
-                <Typography variant='subtitle1'>Upload Signature</Typography>
-                <TextField name='signature' inputProps={{ accept: "image/*" }} className={sty.textField} type='file' onChange={handleChange} helperText='size must not exceed 100kb' />
-            </div>
-            <Fab style={{ margin: '20px 0' }} color="primary" variant='extended' onClick={upload} >submit & Download Challan</Fab>
-            {/* // </Paper> */}
-        </>
+    // <Paper className={sty.paper}>
+    return (<>
+        <Typography variant='h5'>Upload Photo & Signature</Typography><br />
+        <div style={{ display: 'flex', flexDirection: 'column', paddingLeft: 16 }}>
+            <img src={state.pic} alt=" " style={{
+                width: '99px',
+                height: '105px',
+                border: 'solid 1px',
+            }} />
+            <Typography variant='subtitle1'>Upload Photo</Typography>
+            <TextField name='picture' inputProps={{ accept: "image/*" }} onChange={handleChange} className={sty.textField} helperText='size must not exceed 100kb' type='file' />
+            <img src={state.sig} alt="signature" style={{
+                width: '150px',
+                height: '67px',
+                border: 'solid 1px',
+            }} />
+            <Typography variant='subtitle1'>Upload Signature</Typography>
+            <TextField name='signature' inputProps={{ accept: "image/*" }} className={sty.textField} type='file' onChange={handleChange} helperText='size must not exceed 100kb' />
+        </div>
+        <Fab disabled={loading} style={{ margin: '20px 0' }} color="primary" variant='extended' onClick={upload} >
+            {loading ? <><p>Processing</p><CircularProgress /> </> : 'submit & Download Challan'}</Fab>
+        {/* // </Paper> */}
+    </>
 
     )
 }
-Form4.propType = { 
+Form4.propType = {
     id: PropType.string.isRequired,
+    checkUser: PropType.func.isRequired,
 }
-export default Form4
+const mapToProp = {
+    checkUser
+}
+const mapToState = (state) => ({
+    auth: state.admin.auth,
+})
+export default connect(mapToState, mapToProp)(Form4)

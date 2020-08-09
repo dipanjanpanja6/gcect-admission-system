@@ -1,18 +1,19 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { TextField, MenuItem, Typography, Divider, Fab, InputAdornment, } from '@material-ui/core';
+import { TextField, MenuItem, Typography, Divider, Fab, InputAdornment, CircularProgress, } from '@material-ui/core';
 import { Form, Field, Formik } from 'formik';
 import * as Yup from 'yup';
 import { useHistory } from 'react-router-dom';
 import PropType from 'prop-types'
 import Axios from 'axios';
 import { url } from '../config/config';
+import { useEffect } from 'react';
 
 const useStyles = makeStyles((theme) => ({
     root: {
         padding: 50,
         // lineHeight:1
-        backgroundColor: '#eee',
+        backgroundColor: theme.palette.background.default,
         [theme.breakpoints.down('sm')]: {
             // width: 'inherit',
             padding: 3
@@ -55,7 +56,10 @@ const useStyles = makeStyles((theme) => ({
 
 function FormMain3(props) {
     const sty = useStyles();
-    const history = useHistory()
+    useEffect(()=>{
+        window.scrollTo(0, 0)
+    },[])
+    const [loading, setLoading] = React.useState(false)
 
     const blood = [
         'A-', 'A+', 'B-', 'B+', 'AB-', 'AB+', 'O-', 'O+', 'Unknown'
@@ -139,6 +143,7 @@ function FormMain3(props) {
 
             onSubmit={(values, { setSubmitting }) => {
                 setSubmitting(true);
+                setLoading(true)
                 const PA = {
                     address: values.AddressX,
                     policeStation: values.PSPX,
@@ -185,6 +190,7 @@ function FormMain3(props) {
                 }
 
                 console.log(data);
+
                 fetch(`${url}/api/student/${props.id}/family`, {
                     method: 'POST',
                     credentials: 'include',
@@ -192,19 +198,21 @@ function FormMain3(props) {
                     body: JSON.stringify(data)
                 }).then(res => {
                     res.json().then(d => {
+                        setLoading(false)
                         console.log(d);
                         if (d.success === true) {
                             setSubmitting(false);
                             localStorage.setItem('step', 3)
                             props.success(3);
-
-                        }
-                        if (d.error === true) {
+                        }else{
                             setSubmitting(false);
-                            alert(d.message)
+                            alert(JSON.stringify(d.message, null, 2)); 
                         }
                     })
-                }).catch(r => console.log(r))
+                }).catch(r => {
+                    setLoading(false)
+                    console.log(r)
+                })
 
             }}
 
@@ -515,7 +523,9 @@ function FormMain3(props) {
                                 /></>}
                         </div>
                         <br />
-                        <Fab style={{ margin: '20px 0' }} color="primary" variant='extended' type='submit' >submit & Next</Fab>
+                        <Fab disabled={loading} style={{ margin: '20px 0' }} color="primary" variant='extended' type='submit' >
+                        {loading ? <><p>Processing</p><CircularProgress /> </> : 'submit & Next'}
+                            </Fab>
                     </Form>)
             }}
         </Formik >
